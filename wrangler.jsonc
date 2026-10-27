@@ -11,7 +11,7 @@
     "not_found_handling": "404-page"
   },
   // Memoria compartida (resúmenes encontrados, canales de YouTube, aviso de cupo agotado).
-  // Sustituye e79b312fa6b84b96ba2bf05b1f259c6a por el ID del espacio KV "CONQUEROR_CACHE" que crees en Cloudflare.
+  // ID del espacio KV "CONQUEROR_CACHE" creado en Cloudflare.
   "kv_namespaces": [
     { "binding": "CACHE", "id": "e79b312fa6b84b96ba2bf05b1f259c6a" }
   ],
