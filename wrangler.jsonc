@@ -8,16 +8,16 @@
     "directory": "./public",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Las rutas /api/* las atiende siempre el servidor (nunca se buscan como archivos)
+    "run_worker_first": ["/api/*"]
   },
-  // Memoria compartida (resúmenes encontrados, canales de YouTube, aviso de cupo agotado).
+  // Memoria compartida (datos de las APIs, resúmenes encontrados, canales de YouTube, contador de peticiones).
   // ID del espacio KV "CONQUEROR_CACHE" creado en Cloudflare.
   "kv_namespaces": [
     { "binding": "CACHE", "id": "e79b312fa6b84b96ba2bf05b1f259c6a" }
   ],
-  // Tarea automática cada 10 minutos: precarga los partidos del día
-  "triggers": { "crons": ["*/10 * * * *"] },
   "observability": { "enabled": true }
-  // Secretos (se configuran en el panel de Cloudflare, nunca aquí):
+  // Secretos (se configuran en el panel de Cloudflare como tipo "Secret", nunca aquí):
   //   API_FOOTBALL_KEY · FD_TOKEN · YT_KEY
 }

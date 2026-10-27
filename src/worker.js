@@ -30,13 +30,6 @@ export default {
     }
     // Resto: archivos estáticos de /public
     return env.ASSETS.fetch(request);
-  },
-
-  // Tarea programada: mantiene caliente la caché del día (partidos de hoy) para que el primer visitante no espere
-  async scheduled(event, env, ctx) {
-    const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid' }).format(new Date());
-    const path = `/fixtures?date=${today}&timezone=Europe%2FMadrid`;
-    ctx.waitUntil(cachedUpstream(env, ctx, 'football', path, ttlFor('football', path)).catch(() => {}));
   }
 };
 
@@ -83,52 +76,76 @@ async function handleApi(request, env, ctx, url) {
 }
 
 /* ---------------- Caché ---------------- */
-// Cuánto tiempo se guarda cada respuesta de API-Sports
+// ===== API-Sports: caché global (KV) con presupuesto diario =====
+// El plan gratuito permite 100 peticiones al día por deporte. El servidor:
+//  - guarda cada respuesta en KV (compartida por todos los visitantes de todo el mundo),
+//  - solo vuelve a pedirla cuando ha caducado,
+//  - nunca supera DAILY_BUDGET peticiones al día: si se agota, sirve la última copia guardada.
+const DAILY_BUDGET = 90;
 function ttlFor(host, path) {
-  if (/[?&]live=/.test(path)) return 60;
   const d = path.match(/[?&]date=(\d{4}-\d{2}-\d{2})/);
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid' }).format(new Date());
-  if (d) return d[1] < today ? 12 * 3600 : 120;            // días pasados: 12 h · hoy y mañana: 2 min
-  if (/[?&]id=\d+/.test(path)) return 120;                  // un partido concreto: 2 min (se alarga abajo si ha terminado)
-  if (/\/standings/.test(path)) return 3600;
-  if (/[?&]next=/.test(path)) return 3600;
-  if (/[?&]round=/.test(path)) return 600;
-  if (/[?&]season=/.test(path)) return 6 * 3600;
-  return 600;
+  if (d) return d[1] < today ? 24 * 3600 : 30 * 60;           // días pasados: 24 h · hoy y mañana: 30 min
+  if (/[?&]id=\d+/.test(path)) return 10 * 60;                 // un partido concreto: 10 min (30 días si ya terminó)
+  if (/\/standings/.test(path)) return 12 * 3600;
+  if (/[?&]next=/.test(path)) return 12 * 3600;
+  if (/[?&]round=/.test(path)) return 6 * 3600;
+  if (/[?&]season=/.test(path)) return 12 * 3600;
+  return 3600;
 }
-
+const utcDay = () => new Date().toISOString().slice(0, 10);
+async function budgetLeft(env, host) {
+  const used = parseInt(await env.CACHE.get('budget:' + host + ':' + utcDay()) || '0', 10);
+  return DAILY_BUDGET - used;
+}
+async function spendBudget(env, ctx, host) {
+  const k = 'budget:' + host + ':' + utcDay();
+  const used = parseInt(await env.CACHE.get(k) || '0', 10);
+  ctx.waitUntil(env.CACHE.put(k, String(used + 1), { expirationTtl: 2 * 86400 }));
+}
 async function cachedUpstream(env, ctx, host, path, ttl) {
-  const cache = caches.default;
-  const key = new Request('https://cache.conquerortv/' + host + path);
-  const hit = await cache.match(key);
-  if (hit) return withCors(hit);
+  const key = 'as:' + host + ':' + path;
+  const saved = await env.CACHE.get(key, 'json');               // { ts, ttl, body }
+  const fresh = saved && Date.now() - saved.ts < saved.ttl * 1000;
+  if (fresh) return jsonText(saved.body, ttl);
 
-  // Si el cupo diario está agotado, no se pide nada más hasta las 00:00 UTC
-  const limitKey = 'limit:' + host;
-  if (env.CACHE && await env.CACHE.get(limitKey)) {
+  // Caducado o inexistente: ¿queda presupuesto hoy y no hay bloqueo por cupo?
+  const blocked = await env.CACHE.get('limit:' + host);
+  if (blocked || (await budgetLeft(env, host)) <= 0) {
+    if (saved) return jsonText(saved.body, 60);                // copia antigua mejor que nada
     return json({ errors: { requests: 'LIMIT_REACHED' }, response: [] });
   }
 
-  const res = await fetch(UPSTREAM[host] + path, { headers: { 'x-apisports-key': env.API_FOOTBALL_KEY || '' } });
-  const body = await res.text();
+  await spendBudget(env, ctx, host);
+  let res, body;
+  try {
+    res = await fetch(UPSTREAM[host] + path, { headers: { 'x-apisports-key': env.API_FOOTBALL_KEY || '' } });
+    body = await res.text();
+  } catch (e) {
+    if (saved) return jsonText(saved.body, 60);
+    throw e;
+  }
   let data = null;
   try { data = JSON.parse(body); } catch (e) {}
   const errs = data && data.errors && (Array.isArray(data.errors) ? data.errors : Object.values(data.errors));
-  if (errs && errs.length) {
-    const msg = errs.join(' · ');
-    if (/request limit|too many requests/i.test(msg) && env.CACHE) {
+  if (!data || (errs && errs.length)) {
+    const msg = errs ? errs.join(' · ') : 'Respuesta no válida';
+    if (/request limit|too many requests/i.test(msg)) {
       const now = new Date();
       const secs = Math.max(60, Math.floor((Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1) - now) / 1000));
-      ctx.waitUntil(env.CACHE.put(limitKey, '1', { expirationTtl: secs }));
+      ctx.waitUntil(env.CACHE.put('limit:' + host, '1', { expirationTtl: secs }));
     }
-    return json(data, 200);   // los errores no se guardan en caché
+    if (saved) return jsonText(saved.body, 60);               // con error, se sirve la última copia buena
+    return json(data || { errors: [msg], response: [] });
   }
-  // Partido terminado: se puede guardar mucho más tiempo
-  if (/[?&]id=\d+/.test(path) && data && data.response && data.response[0] && data.response[0].fixture &&
-      ['FT', 'AET', 'PEN'].includes(data.response[0].fixture.status.short)) ttl = 7 * 86400;
-  const out = new Response(body, { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': `public, max-age=${ttl}` } });
-  ctx.waitUntil(cache.put(key, out.clone()));
-  return withCors(out);
+  // Partido terminado: no cambiará, se guarda 30 días
+  if (/[?&]id=\d+/.test(path) && data.response && data.response[0] && data.response[0].fixture &&
+      ['FT', 'AET', 'PEN'].includes(data.response[0].fixture.status.short)) ttl = 30 * 86400;
+  ctx.waitUntil(env.CACHE.put(key, JSON.stringify({ ts: Date.now(), ttl, body }), { expirationTtl: Math.max(ttl * 4, 2 * 86400) }));
+  return jsonText(body, ttl);
+}
+function jsonText(body, maxAge) {
+  return new Response(body, { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=' + Math.min(maxAge, 300), 'access-control-allow-origin': '*' } });
 }
 
 async function cachedFetch(ctx, upstreamUrl, init, ttl) {
