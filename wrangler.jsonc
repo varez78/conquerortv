@@ -1,0 +1,23 @@
+{
+  // Configuración del Worker de ConquerorTV
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "conquerortv",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // Memoria compartida (resúmenes encontrados, canales de YouTube, aviso de cupo agotado).
+  // Sustituye REEMPLAZAR_CON_ID_DE_KV por el ID del espacio KV "CONQUEROR_CACHE" que crees en Cloudflare.
+  "kv_namespaces": [
+    { "binding": "CACHE", "id": "REEMPLAZAR_CON_ID_DE_KV" }
+  ],
+  // Tarea automática cada 10 minutos: precarga los partidos del día
+  "triggers": { "crons": ["*/10 * * * *"] },
+  "observability": { "enabled": true }
+  // Secretos (se configuran en el panel de Cloudflare, nunca aquí):
+  //   API_FOOTBALL_KEY · FD_TOKEN · YT_KEY
+}

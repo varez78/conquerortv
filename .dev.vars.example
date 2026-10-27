@@ -1,0 +1,4 @@
+# Copia este archivo como .dev.vars para probar en local con `npm run dev` (nunca lo subas a GitHub)
+API_FOOTBALL_KEY=tu_clave_de_api_sports
+FD_TOKEN=tu_token_de_football_data
+YT_KEY=tu_clave_de_youtube

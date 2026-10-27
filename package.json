@@ -1,0 +1,13 @@
+{
+  "name": "conquerortv",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ConquerorTV: resúmenes y directos deportivos (Cloudflare Worker + web estática)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.154.0"
+  }
+}

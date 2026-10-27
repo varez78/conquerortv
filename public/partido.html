@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resumen del partido – ConquerorTV</title>
+<meta name="description" content="Resumen en vídeo, goles, estadísticas y dónde ver el próximo partido.">
+<link rel="canonical" href="https://conquerortv.example/">
+<script>document.documentElement.setAttribute('data-theme','dark');try{if(localStorage.getItem('ctv_theme')==='light')document.documentElement.removeAttribute('data-theme')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json" id="ldjson">{}</script>
+<style>
+/* ===== Tokens de diseño ===== */
+:root{
+  --bg:#F5F6F8; --surface:#FFFFFF; --surface-2:#EEF0F3; --surface-up:#FAFBFC;
+  --line:#E1E4EA; --line-soft:#E3E6EB; --btn-line:#C9CED6;
+  --text:#101418; --text-2:#344054; --muted:#5B6574; --muted-2:#5F6B7A;
+  --red:#D92D20; --red-soft:#F04438;
+  --home:#2E6BE6; --away:#E5484D;
+  --shadow:0 1px 2px rgba(16,20,24,.06);
+  --radius:16px;
+  --font-display:'Barlow Condensed',sans-serif; --font-body:Inter,system-ui,sans-serif;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#0B0F14; --surface:#141A21; --surface-2:#1C232C; --surface-up:#11161C;
+  --line:#262F3A; --line-soft:#1E2630; --btn-line:#344054;
+  --text:#F2F4F7; --text-2:#C9D1DB; --muted:#9AA4B2; --muted-2:#8A94A3;
+  --red:#D92D20; --red-soft:#F97066;
+  --home:#528BFF; --away:#F97066;
+  --shadow:none;
+  color-scheme:dark;
+}
+
+/* ===== Base ===== */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.45}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid #528BFF;outline-offset:2px}
+img{display:block;max-width:100%}
+h1,h2,h3{margin:0;line-height:1.2}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ===== Cabecera ===== */
+.site-header{background:var(--surface);border-bottom:1px solid var(--line-soft)}
+.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:64px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none!important}
+.brand-mark{width:32px;height:32px;border-radius:9px;background:var(--red);display:flex;align-items:center;justify-content:center}
+.brand-name{font-family:var(--font-display);font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:.02em}
+.brand-name span{color:var(--red-soft);font-weight:600;margin-left:4px}
+.main-nav{display:flex;gap:18px;font-size:14px;font-weight:600}
+.header-tools{margin-left:auto;display:flex;align-items:center;gap:8px}
+.search{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;color:var(--muted);min-width:220px}
+.search input{border:0;background:transparent;color:var(--text);font:inherit;outline:none;width:100%}
+.icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:transparent;display:inline-flex;align-items:center;justify-content:center}
+.theme-btn .sun{display:none}
+:root[data-theme="dark"] .theme-btn .sun{display:block}
+:root[data-theme="dark"] .theme-btn .moon{display:none}
+
+/* ===== Estructura de la página ===== */
+.page{padding-top:20px;padding-bottom:64px;display:flex;flex-direction:column;gap:24px}
+.breadcrumb{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;padding:0;margin:0;list-style:none}
+.breadcrumb li+li::before{content:"›";margin-right:8px}
+/* Escritorio: contenido + lateral independientes. Móvil: una sola columna ordenada por prioridad de negocio */
+.layout{display:flex;gap:24px;align-items:flex-start}
+.col-main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:24px}
+.col-side{flex:0 0 340px;display:flex;flex-direction:column;gap:20px}
+@media (max-width:960px){
+  .layout{flex-direction:column;align-items:stretch}
+  .col-main,.col-side{display:contents}
+  .a-video{order:1}.a-videos{order:2}.a-moments{order:3}.a-upcoming{order:4}.a-report{order:5}.a-stats{order:6}
+  .a-lineups{order:7}.a-standings{order:8}.a-shop{order:9}.a-tickets{order:10}.a-more{order:11}
+}
+
+/* ===== Componentes ===== */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px}
+.section-title{font-size:18px;font-weight:700;margin-bottom:12px;display:flex;align-items:baseline;gap:12px}
+.section-title .more-link{margin-left:auto;font-size:13px;font-weight:500;color:var(--muted)}
+.sponsored-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+.crest{border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex:0 0 auto}
+.crest.home{background:#1D4ED8}.crest.away{background:#B42318}
+.platform{height:28px;padding:0 9px;border-radius:6px;display:inline-flex;align-items:center;font-weight:800;font-size:12px;flex:0 0 auto}
+.platform.dazn{background:#F8F80D;color:#0B0F14}
+.platform.movistar{background:#019DF4;color:#fff}
+.btn{height:40px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;border:1px solid transparent;text-decoration:none!important;white-space:nowrap}
+.btn-primary{background:var(--red);color:#fff}
+.btn-light{background:var(--text);color:var(--bg)}
+.btn-outline{border-color:var(--btn-line)}
+
+/* Marcador */
+.scoreboard{display:flex;flex-direction:column;gap:18px;padding:24px clamp(16px,3vw,32px)}
+.score-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.score-meta strong{color:var(--text);font-weight:600}
+.status-tag{margin-left:auto;font-size:12px;font-weight:700;letter-spacing:.06em;padding:4px 8px;border-radius:6px;border:1px solid var(--btn-line);color:var(--text-2)}
+.score-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px}
+.team{display:flex;align-items:center;gap:16px;min-width:0}
+.team.home{justify-content:flex-end;text-align:right}
+.team-name{font-size:clamp(18px,2.2vw,28px);font-weight:700}
+.team .crest{width:64px;height:64px;font-size:18px}
+.score{font-family:var(--font-display);font-weight:700;font-size:clamp(48px,6vw,72px);line-height:1}
+.score .sep{color:var(--muted-2)}
+.scorers{display:grid;grid-template-columns:minmax(0,1fr) 120px minmax(0,1fr);gap:16px;font-size:13px;color:var(--muted)}
+.scorers .home{text-align:right}
+@media (max-width:600px){
+  .team,.team.home{flex-direction:column;justify-content:center;text-align:center;gap:8px}
+  .team.home .crest{order:-1}
+  .team .crest{width:52px;height:52px;font-size:15px}
+  .team-name{font-size:15px}
+  .score{font-size:48px}
+  .scorers{grid-template-columns:1fr;text-align:center}
+  .scorers .home,.scorers .away{text-align:center}
+  .scorers .gap{display:none}
+  .status-tag{margin-left:0}
+}
+
+/* Vídeo */
+.video-block{display:flex;flex-direction:column;gap:12px}
+.video-block h1{font-size:clamp(21px,2.4vw,26px)}
+.player{position:relative;width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#05070A;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:#F2F4F7}
+.player .badge{position:absolute;font-size:12px;font-weight:600;background:rgba(11,15,20,.85);padding:4px 8px;border-radius:6px}
+.player .channel{top:14px;left:14px}
+.player .duration{bottom:14px;right:14px}
+.play-btn{width:84px;height:84px;border-radius:50%;border:0;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center}
+@media (max-width:600px){.play-btn{width:64px;height:64px}}
+.sponsor-strip{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;background:var(--surface-up);border:1px solid var(--line);flex-wrap:wrap}
+.sponsor-strip p{flex:1 1 240px;margin:0;font-size:14px;color:var(--text-2)}
+
+/* Más vídeos */
+.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.video-card{display:flex;flex-direction:column;gap:6px}
+.thumb{aspect-ratio:16/9;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:flex-end;justify-content:flex-end;padding:8px}
+.thumb span{font-size:11px;color:#F2F4F7;background:rgba(11,15,20,.85);padding:2px 6px;border-radius:5px}
+.video-card b{font-size:14px}.video-card small{font-size:12px;color:var(--muted)}
+@media (max-width:600px){
+  .video-grid{display:flex;overflow-x:auto;margin-right:-16px;padding-right:16px;scroll-snap-type:x mandatory}
+  .video-card{flex:0 0 200px;scroll-snap-align:start}
+}
+
+/* Momentos clave */
+.timeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.timeline li{display:grid;grid-template-columns:48px 28px 1fr;align-items:center;gap:8px}
+.minute{font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--muted)}
+.timeline .crest{width:24px;height:24px;font-size:9px}
+.yellow{display:inline-block;width:10px;height:14px;background:#FDB022;border-radius:2px;vertical-align:-2px;margin-right:6px}
+
+/* Crónica */
+.report p{margin:0;color:var(--text-2);line-height:1.7;max-width:760px}
+
+/* Estadísticas */
+.stat{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.stat-head{display:flex;justify-content:space-between;font-size:13px}
+.stat-bar{display:flex;gap:4px;height:8px}
+.stat-bar .h{background:var(--home);border-radius:4px 0 0 4px}
+.stat-bar .a{background:var(--away);border-radius:0 4px 4px 0}
+
+/* Alineaciones */
+.lineups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;font-size:14px}
+.lineups div{display:flex;flex-direction:column;gap:6px}
+details.collapsible summary{cursor:pointer;font-size:18px;font-weight:700;list-style:none}
+details.collapsible summary::after{content:"＋";float:right;color:var(--muted)}
+details.collapsible[open] summary::after{content:"－"}
+details.collapsible[open] summary{margin-bottom:12px}
+
+/* Próximos partidos (afiliado) */
+.upcoming-item{display:flex;flex-direction:column;gap:8px;padding:14px 0;border-bottom:1px solid var(--line)}
+.upcoming-item:first-of-type{padding-top:0}
+.upcoming-item:last-of-type{border-bottom:0}
+.upcoming-item small{font-size:12px;color:var(--muted)}
+.upcoming-item .row{display:flex;align-items:center;gap:8px}
+.upcoming-item .row .label{flex:1;font-size:13px;color:var(--text-2)}
+
+/* Clasificación */
+.table{width:100%;border-collapse:collapse;font-size:14px}
+.table th{font-size:12px;font-weight:500;color:var(--muted);text-align:left;padding:0 0 6px}
+.table td{padding:6px 0;border-top:1px solid var(--line)}
+.table .num{text-align:right;width:44px}
+.table .pos{width:28px;color:var(--muted)}
+.table .hl td{font-weight:700}
+
+/* Tienda (afiliado) */
+.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.product{display:flex;flex-direction:column;gap:4px}
+.product .img{aspect-ratio:1;border-radius:12px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted-2)}
+.product b{font-size:13px}.product span{font-size:13px;color:var(--muted)}
+
+/* Entradas */
+.tickets{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1px dashed var(--btn-line);font-size:14px}
+
+/* Más resúmenes */
+.more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.mini{display:flex;flex-direction:column;gap:8px;padding:12px}
+.mini .thumb{border:0}
+.mini .line{display:flex;justify-content:space-between;font-weight:600;font-size:14px}
+.mini .line.lose{color:var(--muted)}
+@media (max-width:600px){
+  .more-grid{grid-template-columns:1fr}
+  .mini{flex-direction:row;align-items:center;gap:12px}
+  .mini .thumb{width:96px;flex:0 0 auto;padding:0}
+  .mini .lines{flex:1;display:flex;flex-direction:column;gap:4px}
+}
+
+/* Preguntas */
+.faq{display:flex;flex-direction:column;gap:12px;max-width:860px;border-top:1px solid var(--line);padding-top:24px}
+.faq .section-title{margin-bottom:4px}
+.key-facts{margin:0 0 4px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.key-facts div{background:var(--surface);padding:10px 14px;display:flex;flex-direction:column;gap:2px}
+.key-facts dt{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
+.key-facts dd{margin:0;font-size:14px;font-weight:600}
+.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.faq-item h3{font-size:16px;font-weight:700;line-height:1.35}
+.faq-item p{margin:6px 0 0;color:var(--text-2);line-height:1.6}
+.faq-item a{color:var(--text);text-decoration:underline;text-underline-offset:2px}
+.faq-meta{margin:4px 0 0;font-size:12px;color:var(--muted-2)}
+@media (max-width:600px){.key-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Pie */
+.site-footer{background:var(--surface);border-top:1px solid var(--line-soft)}
+.site-footer .wrap{display:flex;gap:24px;flex-wrap:wrap;padding-top:24px;padding-bottom:24px;font-size:13px;color:var(--muted)}
+
+@media (max-width:760px){
+  .main-nav,.search{display:none}
+}
+
+.picker-row{gap:6px}
+.player iframe{position:absolute;inset:0}
+
+.where{display:flex;flex-direction:column;gap:4px}
+.where-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.where-row{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface-up);flex-wrap:wrap}
+.where-info{flex:1 1 180px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.where-info span{font-size:13px;color:var(--muted)}
+.where-actions{display:flex;gap:8px;flex-wrap:wrap}
+.platform.rtve{background:#E5222D;color:#fff}
+.live-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:6px;background:rgba(240,68,56,.18);color:#FDA29B;font-size:12px;font-weight:700;letter-spacing:.08em}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#F97066;display:inline-block;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.player iframe,#ytplayer{position:absolute;inset:0;width:100%;height:100%;border:0}
+.link-btn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="ConquerorTV, inicio">
+      <span class="brand-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg></span>
+      <span class="brand-name">Conqueror<span>TV</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Secciones">
+      <a href="/">Resúmenes</a><a href="/">En directo</a><a href="/">Fútbol</a><a href="/">Baloncesto</a><a href="/">Motor</a>
+    </nav>
+    <div class="header-tools">
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <span class="sr-only">Buscar</span>
+        <input type="search" placeholder="Busca un equipo o partido">
+      </label>
+      <button class="icon-btn theme-btn" id="themeBtn" type="button" aria-label="Activar modo claro">
+        <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
+      </button>
+      <button class="icon-btn" id="shareBtn" type="button" aria-label="Compartir">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5h14v-5"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<main class="wrap page" id="app" aria-live="polite"></main>
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© ConquerorTV · Resúmenes oficiales de canales con derechos</span>
+    <a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cómo ganamos dinero (afiliación)</a>
+  </div>
+</footer>
+<script>
+/* ================= Página de partido con datos reales =================
+   ?id=<id de partido de API-Football>  → muestra ese partido
+   sin parámetro                        → lista de partidos terminados de ayer y hoy para elegir */
+
+// Todas las peticiones pasan por el servidor de Cloudflare: las claves no están en el navegador
+const API = '/api/sports/football';
+const TZ = 'Europe/Madrid';
+const SITE = 'https://conquerortv.example';
+const FEATURED = { 140: 'LaLiga', 39: 'Premier League', 135: 'Serie A', 78: 'Bundesliga', 61: 'Ligue 1', 2: 'Champions League', 3: 'Europa League', 848: 'Conference League', 141: 'LaLiga Hypermotion', 143: 'Copa del Rey' };
+const PLATFORMS = {
+  dazn: { key: 'dazn', name: 'DAZN', cls: 'dazn', short: 'DAZN', url: 'https://www.dazn.com/es-ES/home' },
+  movistar: { key: 'movistar', name: 'Movistar Plus+', cls: 'movistar', short: 'M+', url: 'https://ver.movistarplus.es/', signup: 'https://www.movistarplus.es/' },
+  rtve: { key: 'rtve', name: 'RTVE Play', cls: 'rtve', short: 'RTVE', url: 'https://www.rtve.es/play/', free: true }
+};
+// Guía de emisiones en España, temporada 2026-27 (revisar cada temporada)
+const BROADCAST_ES = {
+  140: [['movistar', 'Todos los partidos (LALIGA TV por M+)'], ['dazn', '5 partidos por jornada (DAZN LALIGA)']],
+  141: [['movistar', 'LALIGA TV Hypermotion'], ['dazn', 'Según el partido']],
+  143: [['movistar', 'Todos los partidos'], ['rtve', 'Algunos partidos en abierto']],
+  2: [['movistar', 'Liga de Campeones por M+']], 3: [['movistar', 'Liga de Campeones por M+']], 848: [['movistar', 'Liga de Campeones por M+']],
+  39: [['dazn', 'Todos los partidos'], ['movistar', '1 partido por jornada']], 135: [['dazn', 'Todos los partidos'], ['movistar', '1 partido por jornada']],
+  78: [['dazn', 'Todos los partidos']], 61: [['dazn', 'Todos los partidos']]
+};
+const LIVE_STATUS = ['1H', 'HT', '2H', 'ET', 'BT', 'P', 'LIVE', 'INT', 'SUSP'];
+const AFFILIATE_LINKS = { dazn: '', movistar: '' };   // ← tus enlaces de afiliado   // pega aquí tus enlaces de afiliado
+const YT_OFFICIAL = /^(LALIGA( EA SPORTS| HYPERMOTION)?|LaLiga|Premier League|Serie A|Bundesliga|Ligue 1.*|UEFA.*|Movistar.*|DAZN.*|ESPN.*|Sky Sports.*|beIN SPORTS.*|TNT Sports.*|CBS Sports Golazo.*|RFEF)$/i;
+
+const app = document.getElementById('app');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const loadJSON = k => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+const saveJSON = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const madridDate = d => new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(d);
+const fmt = (iso, o) => new Intl.DateTimeFormat('es-ES', { timeZone: TZ, ...o }).format(new Date(iso));
+const longDate = iso => fmt(iso, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const shortDate = iso => fmt(iso, { weekday: 'short', day: 'numeric', month: 'short' });
+const hour = iso => fmt(iso, { hour: '2-digit', minute: '2-digit' });
+const ini = n => { const w = String(n || '').split(/\s+/).filter(Boolean); return (w.length === 1 ? w[0].slice(0, 3) : w.slice(0, 3).map(x => x[0]).join('')).toUpperCase(); };
+const NORM = t => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const slug = t => NORM(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+// Petición a API-Football con caché local (los partidos terminados no cambian)
+async function api(path, ttlMin = 720){
+  const key = 'ctvp_' + path;
+  const c = loadJSON(key);
+  if (c && Date.now() - c.ts < ttlMin * 60000) return c.data;
+  // Cupo diario agotado: se usan los datos guardados (aunque sean antiguos) y no se pide nada hasta las 00:00 UTC
+  const lim = loadJSON('ctvp_limit');
+  if (lim && Date.now() < lim) { if (c) return c.data; throw new Error(limitMsg()); }
+  const res = await fetch(API + path);
+  const json = await res.json();
+  const errs = json.errors && (Array.isArray(json.errors) ? json.errors : Object.values(json.errors));
+  if (errs && errs.length) {
+    const msg = errs.join(' · ');
+    if (/LIMIT_REACHED|request limit|too many requests/i.test(msg)) {
+      const d = new Date(); saveJSON('ctvp_limit', Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1));
+      if (c) return c.data;
+      throw new Error(limitMsg());
+    }
+    throw new Error(msg);
+  }
+  saveJSON(key, { ts: Date.now(), data: json.response || [] });
+  return json.response || [];
+}
+function limitMsg(){
+  const d = new Date(), t = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1);
+  return 'Se ha agotado el cupo diario gratuito de datos (100 peticiones). Se renueva a las ' + new Intl.DateTimeFormat('es-ES', { timeZone: TZ, hour: '2-digit', minute: '2-digit' }).format(new Date(t)) + ' (hora de España).';
+}
+const tryApi = async (path, ttl) => { try { return await api(path, ttl); } catch (e) { console.warn(path, e.message); return null; } };
+
+function roundEs(r){
+  if (!r) return '';
+  let m = r.match(/Regular Season - (\d+)/i); if (m) return 'Jornada ' + m[1];
+  m = r.match(/League Stage - (\d+)/i); if (m) return 'Fase de liga · Jornada ' + m[1];
+  const map = { 'Round of 16': 'Octavos de final', 'Quarter-finals': 'Cuartos de final', 'Semi-finals': 'Semifinales', 'Final': 'Final' };
+  for (const k in map) if (r.includes(k)) return map[k];
+  return r;
+}
+const STATUS = { FT: 'Final', AET: 'Final (prórroga)', PEN: 'Final (penaltis)', NS: 'Por jugar', TBD: 'Por confirmar', '1H': 'En directo', HT: 'Descanso', '2H': 'En directo', ET: 'Prórroga', P: 'Penaltis', PST: 'Aplazado' };
+
+/* ---------- Lista para elegir partido ---------- */
+async function renderPicker(){
+  app.innerHTML = '<p class="muted">Cargando partidos terminados…</p>';
+  const days = [madridDate(new Date()), madridDate(new Date(Date.now() - 86400000))];
+  let list = [], errors = [];
+  for (const d of days) {
+    try { list = list.concat(await api('/fixtures?date=' + d + '&timezone=' + encodeURIComponent(TZ), 30)); }
+    catch (e) { errors.push(d + ': ' + e.message); }
+  }
+  const done = list.filter(f => ['FT', 'AET', 'PEN'].includes(f.fixture.status.short))
+    .sort((a, b) => (FEATURED[b.league.id] ? 1 : 0) - (FEATURED[a.league.id] ? 1 : 0) || new Date(b.fixture.date) - new Date(a.fixture.date));
+  const top = done.filter(f => FEATURED[f.league.id]);
+  const rest = done.filter(f => !FEATURED[f.league.id]).slice(0, 30);
+  const row = f => `<a class="card mini picker-row" href="?id=${f.fixture.id}">
+      <span class="muted" style="font-size:12px">${esc(f.league.name)} · ${esc(shortDate(f.fixture.date))}</span>
+      <span class="line"><span>${esc(f.teams.home.name)}</span><span>${f.goals.home}</span></span>
+      <span class="line"><span>${esc(f.teams.away.name)}</span><span>${f.goals.away}</span></span></a>`;
+  document.title = 'Elige un partido – ConquerorTV';
+  app.innerHTML = `
+    <h1 style="font-size:24px">Elige un partido terminado</h1>
+    <p class="muted">Partidos de ayer y hoy con datos reales de API-Football. Al abrir uno se genera su página completa.</p>
+    ${errors.length ? `<p class="faq-meta">Avisos: ${esc(errors.join(' · '))}</p>` : ''}
+    <h2 class="section-title">Ligas destacadas (${top.length})</h2>
+    <div class="more-grid">${top.map(row).join('') || '<p class="muted">Ningún partido de las ligas destacadas ha terminado todavía.</p>'}</div>
+    <h2 class="section-title" style="margin-top:12px">Otras ligas</h2>
+    <div class="more-grid">${rest.map(row).join('')}</div>`;
+}
+
+/* ---------- Resumen en YouTube ---------- */
+let countryP = null;
+function viewerCountry(){
+  return countryP || (countryP = fetch('/api/country').then(r => r.json()).then(j => j.country || 'ES').catch(() => 'ES'));
+}
+function teamIn(name, t){
+  const w = NORM(name).split(/[^a-z0-9]+/).filter(x => x.length > 2 && !['club','real','city','united','sporting','athletic','atletico','deportivo','fc','cf','ac','sc','ud','sd','rcd','olympique'].includes(x));
+  if (!w.length) return t.includes(NORM(name));
+  return w.some(x => t.includes(x) || (x.length >= 6 && t.includes(x.slice(0, 5))));
+}
+// ===================== Resúmenes SOLO de fuentes oficiales =====================
+// Los busca el servidor (Cloudflare) en los canales oficiales de YouTube: la clave de YouTube no está en el navegador.
+const offNorm = t => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+function bannedFor(key){ try { return JSON.parse(localStorage.getItem('ctv_ytban_' + key)) || []; } catch (e) { return []; } }
+function banOfficialVideo(key, videoId){
+  const l = bannedFor(key); if (!l.includes(videoId)) l.push(videoId);
+  try { localStorage.setItem('ctv_ytban_' + key, JSON.stringify(l)); } catch (e) {}
+}
+async function findOfficialHighlight(ev, region, opts = {}){
+  const ck = 'ctv_hl_' + ev.key;
+  let c = null; try { c = JSON.parse(localStorage.getItem(ck)); } catch (e) {}
+  if (!opts.force && c && (c.status === 'ok' || Date.now() - c.ts < 10 * 60000) && !bannedFor(ev.key).includes(c.videoId)) return c;
+  const res = await fetch('/api/highlight', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...ev, banned: bannedFor(ev.key) }) });
+  const out = await res.json();
+  if (out.errors) throw new Error([].concat(out.errors).join(' · '));
+  out.ts = Date.now();
+  try { localStorage.setItem(ck, JSON.stringify(out)); } catch (e) {}
+  return out;
+}
+// ==============================================================================
+
+const isoDur = d => { const m = String(d || '').match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/); if (!m) return ''; const h = +m[1] || 0, mi = +m[2] || 0, s = +m[3] || 0; return (h ? h + ':' + String(mi).padStart(2, '0') : mi) + ':' + String(s).padStart(2, '0'); };
+
+/* ---------- Página de partido ---------- */
+let fetchedAt = Date.now(), minuteTimer = null;
+// Minuto que avanza solo entre refrescos (sin gastar peticiones): se para en 45+/90+/120+ y en el descanso
+function liveMinute(st){
+  if (st.short === 'HT') return 'Descanso';
+  if (st.short === 'BT') return 'Pausa';
+  if (st.short === 'P') return 'Penaltis';
+  let m = st.elapsed || 0;
+  if (['1H', '2H', 'ET'].includes(st.short)) {
+    m += Math.floor((Date.now() - fetchedAt) / 60000);
+    const cap = st.short === '1H' ? 45 : st.short === '2H' ? 90 : 120;
+    if (m > cap) return cap + '+' + Math.min(m - cap, 9) + '′';
+  }
+  return m + '′';
+}
+async function renderMatch(id){
+  app.innerHTML = '<p class="muted">Cargando el partido…</p>';
+  let f;
+  try {
+    const path = '/fixtures?id=' + id + '&timezone=' + encodeURIComponent(TZ);
+    const cached = loadJSON('ctvp_' + path);
+    const cachedDone = cached && cached.data[0] && ['FT', 'AET', 'PEN'].includes(cached.data[0].fixture.status.short);
+    f = (await api(path, cachedDone ? 720 : 4))[0];      // en juego o por jugar: se refresca cada pocos minutos
+    const c2 = loadJSON('ctvp_' + path); fetchedAt = c2 ? c2.ts : Date.now();
+  }
+  catch (e) { app.innerHTML = `<div class="card"><b>No se ha podido cargar el partido.</b><p class="muted">${esc(e.message)}</p><p><a href="/">Volver a la portada</a></p></div>`; return; }
+  if (!f) { app.innerHTML = '<div class="card"><b>Partido no encontrado.</b> <a href="/">Volver a la portada</a></div>'; return; }
+
+  const H = f.teams.home, A = f.teams.away, L = f.league;
+  const gh = f.goals.home, ga = f.goals.away;
+  const finished = ['FT', 'AET', 'PEN'].includes(f.fixture.status.short);
+  const round = roundEs(L.round);
+  const venue = [f.fixture.venue && f.fixture.venue.name, f.fixture.venue && f.fixture.venue.city].filter(Boolean).join(', ');
+  const ev = (f.events || []);
+  const goals = ev.filter(e => e.type === 'Goal' && e.detail !== 'Missed Penalty');
+  const minute = e => e.time.elapsed + (e.time.extra ? '+' + e.time.extra : '') + '′';
+  const goalTxt = e => esc(e.player.name) + ' ' + minute(e) + (e.detail === 'Penalty' ? ' (p)' : e.detail === 'Own Goal' ? ' (p.p.)' : '');
+  const goalsOf = t => goals.filter(e => e.team.id === t.id).map(goalTxt).join(' · ');
+  const seasonLabel = L.season + '-' + String(L.season + 1).slice(2);
+  const matchName = `${H.name} ${gh}-${ga} ${A.name}`;
+  const vs = `${H.name} – ${A.name}`;
+  const pageUrl = `${SITE}/futbol/${slug(L.name)}/${L.season}-${String(L.season + 1).slice(2)}/${slug(round || 'partido')}/${slug(H.name)}-${slug(A.name)}`;
+
+  // SEO dinámico
+  const isLive = LIVE_STATUS.includes(f.fixture.status.short);
+  document.title = finished ? `Resumen ${matchName} | ${round ? round + ' ' : ''}${L.name} ${seasonLabel} – ConquerorTV`
+    : isLive ? `${H.name} ${gh}-${ga} ${A.name} en directo | Dónde verlo – ConquerorTV`
+    : `${vs}: horario y dónde verlo | ${round ? round + ' ' : ''}${L.name} – ConquerorTV`;
+  document.querySelector('meta[name="description"]').setAttribute('content', `Vídeo resumen del ${matchName} (${L.name}${round ? ', ' + round : ''}): goles, momentos clave, estadísticas y dónde ver el próximo partido.`);
+  document.querySelector('link[rel="canonical"]').setAttribute('href', pageUrl);
+
+  // Datos complementarios (cada uno puede fallar sin romper la página)
+  const [standingsRes, nextH, nextA, roundRes] = await Promise.all([
+    tryApi('/standings?league=' + L.id + '&season=' + L.season, 720),
+    tryApi('/fixtures?team=' + H.id + '&next=1&timezone=' + encodeURIComponent(TZ), 720),
+    tryApi('/fixtures?team=' + A.id + '&next=1&timezone=' + encodeURIComponent(TZ), 720),
+    tryApi('/fixtures?league=' + L.id + '&season=' + L.season + '&round=' + encodeURIComponent(L.round) + '&timezone=' + encodeURIComponent(TZ), 720)
+  ]);
+  const table = standingsRes && standingsRes[0] && standingsRes[0].league.standings ? standingsRes[0].league.standings[0] : null;
+  const rowOf = t => table && table.find(r => r.team.id === t.id);
+  const nexts = [[H, nextH && nextH[0]], [A, nextA && nextA[0]]].filter(x => x[1]);
+  const others = (roundRes || []).filter(x => x.fixture.id !== f.fixture.id && ['FT', 'AET', 'PEN'].includes(x.fixture.status.short)).slice(0, 6);
+
+  // Crónica generada con los datos (sin inventar nada)
+  const winner = gh > ga ? H : ga > gh ? A : null, loser = winner ? (winner === H ? A : H) : null;
+  const sorted = goals.slice().sort((x, y) => x.time.elapsed - y.time.elapsed);
+  let report = finished
+    ? (winner ? `El ${winner.name} ganó ${Math.max(gh, ga)}-${Math.min(gh, ga)} al ${loser.name}` : `El ${H.name} y el ${A.name} empataron a ${gh}`)
+      + ` en el partido de ${round ? 'la ' + round.toLowerCase() + ' de ' : ''}${L.name} ${seasonLabel}, disputado el ${longDate(f.fixture.date)}${venue ? ' en ' + venue : ''}.`
+    : LIVE_STATUS.includes(f.fixture.status.short)
+      ? `El ${H.name} y el ${A.name} juegan ahora en directo${venue ? ' en ' + venue : ''}, en ${round ? 'la ' + round.toLowerCase() + ' de ' : ''}${L.name} ${seasonLabel}. El marcador es ${gh ?? 0}-${ga ?? 0}${f.fixture.status.elapsed ? ' en el minuto ' + f.fixture.status.elapsed : ''}.`
+      : `El ${H.name} – ${A.name} se juega el ${longDate(f.fixture.date)} a las ${hour(f.fixture.date)}${venue ? ' en ' + venue : ''}, en ${round ? 'la ' + round.toLowerCase() + ' de ' : ''}${L.name} ${seasonLabel}.`;
+  if (sorted.length) {
+    const parts = sorted.map((e, i) => `${i === 0 ? 'abrió el marcador' : 'marcó'} ${e.player.name} (${e.team.name}) en el minuto ${e.time.elapsed}${e.detail === 'Penalty' ? ', de penalti' : e.detail === 'Own Goal' ? ', en propia puerta' : ''}`);
+    report += ' ' + parts.join('; ').replace(/^./, c => c.toUpperCase()) + '.';
+  }
+  const reds = ev.filter(e => e.type === 'Card' && /red/i.test(e.detail));
+  if (reds.length) report += ' ' + reds.map(e => `${e.player.name} (${e.team.name}) vio la tarjeta roja en el minuto ${e.time.elapsed}`).join('; ') + '.';
+  const statOf = (t, type) => { const s = (f.statistics || []).find(x => x.team.id === t.id); const v = s && s.statistics.find(x => x.type === type); return v ? v.value : null; };
+  const possH = statOf(H, 'Ball Possession'), possA = statOf(A, 'Ball Possession');
+  if (possH && possA) report += ` El ${H.name} tuvo el ${possH} de posesión y el ${A.name}, el ${possA}.`;
+  const rH = rowOf(H), rA = rowOf(A);
+  if (rH && rA) report += ` Tras este resultado, el ${H.name} es ${rH.rank}º con ${rH.points} puntos y el ${A.name}, ${rA.rank}º con ${rA.points}.`;
+
+  // Bloques HTML
+  const crest = (t, size) => `<img src="${esc(t.logo)}" alt="" width="${size}" height="${size}" style="width:${size}px;height:${size}px;object-fit:contain;flex:0 0 auto">`;
+  const statRows = [['Ball Possession', 'Posesión'], ['Total Shots', 'Tiros'], ['Shots on Goal', 'Tiros a puerta'], ['Corner Kicks', 'Córners'], ['Fouls', 'Faltas'], ['Yellow Cards', 'Amarillas'], ['Passes %', 'Precisión de pase']]
+    .map(([k, label]) => { const a = statOf(H, k), b = statOf(A, k); if (a == null && b == null) return ''; const na = parseFloat(a) || 0, nb = parseFloat(b) || 0; const tot = na + nb || 1;
+      return `<div class="stat"><div class="stat-head"><b>${esc(a ?? 0)}</b><span class="muted">${label}</span><b>${esc(b ?? 0)}</b></div><div class="stat-bar"><span class="h" style="flex:${na / tot}"></span><span class="a" style="flex:${nb / tot}"></span></div></div>`; }).join('');
+  const timeline = ev.filter(e => e.type === 'Goal' || (e.type === 'Card' && /red|yellow/i.test(e.detail)) || e.type === 'Var')
+    .map(e => {
+      const what = e.type === 'Goal' ? (e.detail === 'Missed Penalty' ? 'Penalti fallado' : '<b>Gol</b>') : e.type === 'Var' ? 'VAR · ' + esc(e.detail) : (/red/i.test(e.detail) ? '<span class="yellow" style="background:#D92D20" aria-hidden="true"></span>Tarjeta roja' : '<span class="yellow" aria-hidden="true"></span>Tarjeta amarilla');
+      const extra = e.type === 'Goal' && e.assist && e.assist.name ? ` <span class="muted">(asist. ${esc(e.assist.name)})</span>` : e.detail === 'Penalty' ? ' <span class="muted">(penalti)</span>' : e.detail === 'Own Goal' ? ' <span class="muted">(en propia)</span>' : '';
+      return `<li><span class="minute">${minute(e)}</span>${crest(e.team, 24)}<span>${what} · ${esc(e.player.name || '')}${extra}</span></li>`;
+    }).join('');
+  const lineup = (f.lineups || []).map(l => `<div><b>${esc(l.team.name)}${l.formation ? ' · ' + esc(l.formation) : ''}</b>
+      <span class="muted">${l.startXI.map(p => esc(p.player.name)).join(', ')}</span>
+      ${l.substitutes && l.substitutes.length ? `<span class="muted" style="font-size:13px">Suplentes: ${l.substitutes.map(p => esc(p.player.name)).join(', ')}</span>` : ''}
+      ${l.coach && l.coach.name ? `<span class="muted">Entrenador: ${esc(l.coach.name)}</span>` : ''}</div>`).join('');
+  const platformsFor = leagueId => (BROADCAST_ES[leagueId] || []).map(([k, note]) => ({ ...PLATFORMS[k], note }));
+  const nextHtml = nexts.map(([team, nf]) => {
+    const pf = platformsFor(nf.league.id)[0];
+    return `<div class="upcoming-item"><small>${esc(shortDate(nf.fixture.date))} · ${esc(hour(nf.fixture.date))} · ${esc(nf.league.name)}</small>
+      <b>${esc(nf.teams.home.name)} – ${esc(nf.teams.away.name)}</b>
+      ${pf ? `<div class="row"><span class="platform ${pf.cls}">${pf.short}</span><span class="label">${pf.name}</span><a class="btn btn-primary" href="${esc(AFFILIATE_LINKS[pf.key] || pf.url)}" rel="sponsored noopener" target="_blank">Ver</a></div>` : '<span class="muted" style="font-size:13px">Sin guía de emisión para esta competición</span>'}</div>`;
+  }).join('');
+  const tableHtml = table ? `<table class="table"><thead><tr><th class="pos">#</th><th>Equipo</th><th class="num">PJ</th><th class="num">Pts</th></tr></thead><tbody>
+      ${table.filter(r => r.rank <= 3 || r.team.id === H.id || r.team.id === A.id).map(r => `<tr class="${r.team.id === H.id || r.team.id === A.id ? 'hl' : ''}"><td class="pos">${r.rank}</td><td>${esc(r.team.name)}</td><td class="num">${r.all.played}</td><td class="num">${r.points}</td></tr>`).join('')}
+    </tbody></table>` : '';
+  const othersHtml = others.map(x => `<a class="card mini" href="?id=${x.fixture.id}"><span class="lines">
+      <span class="line ${x.goals.home < x.goals.away ? 'lose' : ''}"><span>${esc(x.teams.home.name)}</span><span>${x.goals.home}</span></span>
+      <span class="line ${x.goals.away < x.goals.home ? 'lose' : ''}"><span>${esc(x.teams.away.name)}</span><span>${x.goals.away}</span></span></span></a>`).join('');
+
+  // Preguntas: solo las que tienen datos reales
+  const faq = [];
+  if (finished) faq.push([`¿Cuál fue el resultado del ${vs}${round ? ' de la ' + round.toLowerCase() : ''} de ${L.name} ${seasonLabel}?`,
+    winner ? `El ${winner.name} ganó ${Math.max(gh, ga)}-${Math.min(gh, ga)} al ${loser.name} en el partido${round ? ' de la ' + round.toLowerCase() : ''} de ${L.name} ${seasonLabel}, disputado el ${longDate(f.fixture.date)}${venue ? ' en ' + venue : ''}.`
+           : `El ${H.name} y el ${A.name} empataron a ${gh} en el partido${round ? ' de la ' + round.toLowerCase() : ''} de ${L.name} ${seasonLabel}, disputado el ${longDate(f.fixture.date)}${venue ? ' en ' + venue : ''}.`]);
+  if (goals.length) faq.push([`¿Quién marcó los goles del ${matchName}?`,
+    [H, A].map(t => { const g = goals.filter(e => e.team.id === t.id); return g.length ? `Por el ${t.name} marcó ${g.map(e => e.player.name + ' en el minuto ' + e.time.elapsed + (e.detail === 'Penalty' ? ' (de penalti)' : e.detail === 'Own Goal' ? ' (en propia puerta)' : '')).join(' y ')}.` : `El ${t.name} no marcó.`; }).join(' ')]);
+  if (finished) faq.push([`¿Dónde ver el resumen y los goles del ${vs}?`, `El vídeo resumen del ${matchName} está en esta página de ConquerorTV, con el vídeo oficial publicado en YouTube por los canales de la competición o de los clubes.`]);
+  if (venue) faq.push([`¿A qué hora y en qué estadio ${finished ? 'se jugó' : 'se juega'} el ${vs}?`, `El ${vs} ${finished ? 'se jugó' : 'se juega'} el ${longDate(f.fixture.date)} a las ${hour(f.fixture.date)} (hora peninsular española) en ${venue}.${f.fixture.referee ? ' El árbitro fue ' + f.fixture.referee.split(',')[0] + '.' : ''}`]);
+  const pf = platformsFor(L.id);
+  if (pf.length) faq.push([`¿En qué canal ${finished ? 'se vio' : 'se puede ver'} el ${vs} en directo en España?`, `En España, ${L.name} se emite en ${pf.map(p => p.name).join(' y ')}.`]);
+  if (rH && rA) faq.push([`¿Cómo queda la clasificación de ${L.name} tras el ${vs}?`, `Tras este partido, el ${H.name} es ${rH.rank}º con ${rH.points} puntos y el ${A.name} es ${rA.rank}º con ${rA.points} puntos.`]);
+  nexts.forEach(([t, nf]) => { const p = platformsFor(nf.league.id)[0];
+    faq.push([`¿Cuándo es el próximo partido del ${t.name} y dónde verlo?`, `El próximo partido del ${t.name} es el ${nf.teams.home.name} – ${nf.teams.away.name}, el ${longDate(nf.fixture.date)} a las ${hour(nf.fixture.date)}, en ${nf.league.name}.${p ? ' En España se puede ver en ' + p.name + '.' : ''}`]); });
+
+  const live = LIVE_STATUS.includes(f.fixture.status.short);
+  const whereTitle = finished ? `Dónde ver ${L.name} en directo en España` : `Dónde ver el ${vs} en España`;
+  const whereBlock = pf.length ? `<section class="card where" id="donde-ver" aria-labelledby="where-title">
+      <h2 class="section-title" id="where-title" style="font-size:17px">${esc(whereTitle)}</h2>
+      <ul class="where-list">${pf.map(p => `<li class="where-row">
+        <span class="platform ${p.cls}" style="height:40px;min-width:56px;justify-content:center;font-size:14px">${p.short}</span>
+        <span class="where-info"><b>${esc(p.name)}</b><span>${esc(p.note || '')}</span></span>
+        <span class="where-actions">
+          <a class="btn btn-primary" href="${esc(p.url)}" target="_blank" rel="noopener">Ver en ${esc(p.name)}</a>
+          ${p.free ? '' : `<a class="btn btn-outline" href="${esc(AFFILIATE_LINKS[p.key] || p.signup || p.url)}" target="_blank" rel="${AFFILIATE_LINKS[p.key] ? 'sponsored noopener' : 'noopener'}">Suscríbete</a>`}
+        </span></li>`).join('')}</ul>
+      <p class="faq-meta">Se abre la web o app oficial de la plataforma y entras con tu propia cuenta. La emisión de cada partido puede variar; consulta su programación.${AFFILIATE_LINKS.dazn || AFFILIATE_LINKS.movistar ? ' Algunos enlaces son de afiliado.' : ''}</p>
+    </section>` : '';
+  app.innerHTML = `
+  <ol class="breadcrumb" aria-label="Ruta"><li><a href="/">Inicio</a></li><li><a href="/">Fútbol</a></li><li>${esc(L.name)}</li>${round ? `<li>${esc(round)}</li>` : ''}</ol>
+
+  <section class="card scoreboard" aria-label="Resultado">
+    <div class="score-meta"><img src="${esc(L.logo)}" alt="" width="22" height="22" style="width:22px;height:22px;object-fit:contain"><strong>${esc(L.name)}${round ? ' · ' + esc(round) : ''}</strong><span>·</span>
+      <time datetime="${esc(f.fixture.date)}">${esc(longDate(f.fixture.date))} · ${esc(hour(f.fixture.date))}</time>${venue ? `<span>·</span><span>${esc(venue)}</span>` : ''}
+      <span class="status-tag">${esc((STATUS[f.fixture.status.short] || f.fixture.status.long).toUpperCase())}${LIVE_STATUS.includes(f.fixture.status.short) ? ' · <span class="js-minute">' + liveMinute(f.fixture.status) + '</span>' : ''}</span></div>
+    <div class="score-row">
+      <div class="team home"><span class="team-name">${esc(H.name)}</span>${crest(H, 64)}</div>
+      <div class="score" aria-label="Resultado ${gh} a ${ga}">${gh ?? '-'} <span class="sep">–</span> ${ga ?? '-'}</div>
+      <div class="team away">${crest(A, 64)}<span class="team-name">${esc(A.name)}</span></div>
+    </div>
+    ${goals.length ? `<div class="scorers"><div class="home">${goalsOf(H)}</div><div class="gap"></div><div class="away">${goalsOf(A)}</div></div>` : ''}
+  </section>
+
+  <div class="layout">
+   <div class="col-main">
+    <section class="video-block a-video" id="resumen" aria-label="Resumen en vídeo">
+      <h1>${finished ? 'Resumen del ' + esc(matchName) : (live ? esc(vs) + ' en directo' : esc(vs) + ': previa y dónde verlo')}</h1>
+      <div class="player" id="player"><span class="muted" style="color:#8A94A3">Buscando el resumen oficial…</span></div>
+      <p class="faq-meta" id="videoMeta"></p>
+      ${whereBlock}
+    </section>
+    ${timeline ? `<section class="card a-moments"><h2 class="section-title">Momentos clave</h2><ol class="timeline">${timeline}</ol></section>` : ''}
+    <section class="report a-report"><h2 class="section-title">Crónica del partido</h2><p>${esc(report)}</p></section>
+    ${statRows ? `<section class="card a-stats"><h2 class="section-title">Estadísticas</h2>${statRows}</section>` : ''}
+    ${lineup ? `<details class="card collapsible a-lineups"><summary>Alineaciones</summary><div class="lineups">${lineup}</div></details>` : ''}
+    ${othersHtml ? `<section class="a-more"><h2 class="section-title">Más resúmenes de la ${esc((round || 'jornada').toLowerCase())}</h2><div class="more-grid">${othersHtml}</div></section>` : ''}
+   </div>
+   <aside class="col-side" aria-label="Información complementaria">
+    ${nextHtml ? `<section class="card a-upcoming"><h2 class="section-title" style="font-size:16px">Próximos partidos · Dónde verlos</h2>${nextHtml}<span class="sponsored-label">Enlaces de afiliado</span></section>` : ''}
+    ${tableHtml ? `<section class="card a-standings"><h2 class="section-title" style="font-size:16px">Clasificación ${esc(L.name)}</h2>${tableHtml}</section>` : ''}
+   </aside>
+  </div>
+
+  <section class="faq" id="preguntas" aria-labelledby="faq-title">
+    <h2 class="section-title" id="faq-title">Preguntas sobre el ${esc(vs)} (${esc(L.name)} ${seasonLabel}${round ? ', ' + esc(round.toLowerCase()) : ''})</h2>
+    <dl class="key-facts" aria-label="Datos clave del partido">
+      <div><dt>Resultado</dt><dd>${esc(matchName)}</dd></div>
+      <div><dt>Competición</dt><dd>${esc(L.name)} ${seasonLabel}${round ? ' · ' + esc(round) : ''}</dd></div>
+      <div><dt>Fecha</dt><dd><time datetime="${esc(f.fixture.date)}">${esc(fmt(f.fixture.date, { day: '2-digit', month: '2-digit', year: 'numeric' }))} · ${esc(hour(f.fixture.date))}</time></dd></div>
+      ${venue ? `<div><dt>Estadio</dt><dd>${esc(venue)}</dd></div>` : ''}
+      ${goals.length ? `<div><dt>Goles</dt><dd>${[goalsOf(H), goalsOf(A)].filter(Boolean).join(' · ')}</dd></div>` : ''}
+      ${f.fixture.referee ? `<div><dt>Árbitro</dt><dd>${esc(f.fixture.referee.split(',')[0])}</dd></div>` : ''}
+    </dl>
+    ${faq.map(([q, a], i) => `<div class="faq-item" id="pregunta-${i + 1}"><h3>${esc(q)}</h3><p>${esc(a)}</p></div>`).join('')}
+    <p class="faq-meta">Actualizado el <time datetime="${new Date().toISOString()}">${esc(longDate(new Date().toISOString()))} a las ${esc(hour(new Date().toISOString()))}</time> · Datos: API-Football · Vídeos: canales oficiales en YouTube</p>
+  </section>`;
+
+  if (location.hash && document.querySelector(location.hash)) requestAnimationFrame(() => document.querySelector(location.hash).scrollIntoView());
+
+  // Datos estructurados con los datos reales
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'SportsEvent', name: `${H.name} vs ${A.name}`, sport: 'Fútbol', startDate: f.fixture.date, location: venue ? { '@type': 'Place', name: f.fixture.venue.name, address: f.fixture.venue.city } : undefined,
+      homeTeam: { '@type': 'SportsTeam', name: H.name, logo: H.logo }, awayTeam: { '@type': 'SportsTeam', name: A.name, logo: A.logo },
+      superEvent: { '@type': 'SportsEvent', name: `${L.name} ${seasonLabel}${round ? ' · ' + round : ''}` }, description: report },
+    { '@type': 'WebPage', '@id': pageUrl, name: document.title, inLanguage: 'es-ES', dateModified: new Date().toISOString(), about: [{ '@type': 'SportsTeam', name: H.name }, { '@type': 'SportsTeam', name: A.name }] },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Fútbol', item: SITE + '/futbol' }, { '@type': 'ListItem', position: 3, name: L.name, item: SITE + '/futbol/' + slug(L.name) }, ...(round ? [{ '@type': 'ListItem', position: 4, name: round }] : [])] },
+    { '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }
+  ] };
+  document.getElementById('ldjson').textContent = JSON.stringify(ld);
+
+  // Resumen en vídeo (asíncrono)
+  const player = document.getElementById('player'), meta = document.getElementById('videoMeta');
+  if (!finished) {
+    player.innerHTML = live
+      ? `<div style="text-align:center;padding:20px;display:flex;flex-direction:column;gap:10px;align-items:center">
+           <span class="live-pill"><span class="live-dot"></span>EN DIRECTO · <span class="js-minute">${liveMinute(f.fixture.status)}</span></span>
+           <span style="font-family:var(--font-display);font-weight:700;font-size:44px">${gh ?? 0} – ${ga ?? 0}</span>
+           <span style="color:#C9D1DB;max-width:420px">Este partido no se emite en abierto. ${pf.length ? 'Míralo con tu suscripción en las plataformas de abajo.' : ''}</span>
+           ${pf.length ? '<a class="btn btn-primary" href="#donde-ver">Dónde verlo</a>' : ''}</div>`
+      : `<div style="text-align:center;padding:20px;display:flex;flex-direction:column;gap:8px;align-items:center">
+           <span style="font-family:var(--font-display);font-weight:700;font-size:32px">${esc(shortDate(f.fixture.date))} · ${esc(hour(f.fixture.date))}</span>
+           <span style="color:#C9D1DB">El resumen estará disponible cuando termine el partido.</span></div>`;
+    if (live) {
+      setTimeout(() => renderMatch(id), 5 * 60000);   // datos reales: cada 5 minutos (1 petición)
+      clearInterval(minuteTimer);
+      minuteTimer = setInterval(() => document.querySelectorAll('.js-minute').forEach(el => { el.textContent = liveMinute(f.fixture.status); }), 15000);
+    }
+    return;
+  }
+  const showVideo = async (force) => {
+    player.innerHTML = '<span style="color:#8A94A3">Buscando el resumen oficial…</span>';
+    try {
+      const region = await viewerCountry();
+      const ev = { key: 'fb-' + f.fixture.id, sourceKey: L.id, kind: 'match', home: H.name, away: A.name, hg: gh, ag: ga, start: f.fixture.date,
+        women: /women|femenin|liga f/i.test(L.name), youth: /u\d{2}|youth|juvenil/i.test(L.name) };
+      const v = await findOfficialHighlight(ev, region, { force });
+      renderDebug(v);
+      const srcName = (v.sources || []).map(x => x.label).join(' / ') || 'la competición';
+      if (v.status === 'no-source') { player.innerHTML = '<span style="color:#8A94A3;padding:16px;text-align:center;max-width:460px">' + esc(L.name) + ' no publica resúmenes oficiales gratuitos en YouTube. Solo mostramos vídeos de fuentes oficiales.</span>'; meta.innerHTML = ''; return; }
+      if (v.status !== 'ok') { player.innerHTML = '<span style="color:#8A94A3;padding:16px;text-align:center;max-width:460px">El resumen oficial de ' + esc(srcName) + ' aún no se ha publicado. Suele llegar 1–3 h después del final y aparecerá aquí en cuanto esté.</span>'; meta.innerHTML = ''; setTimeout(() => showVideo(false), 20 * 60000); return; }
+      const watch = 'https://www.youtube.com/watch?v=' + encodeURIComponent(v.videoId);
+      meta.innerHTML = `<b>${esc(v.channel)}</b> · ${esc(v.title)}${v.duration ? ' · ' + isoDur(v.duration) : ''} · <a href="${watch}" target="_blank" rel="noopener">Ver en YouTube</a> · <button type="button" class="link-btn" id="wrongVideo">¿No es el resumen correcto?</button>`;
+      const blocked = () => {
+        player.innerHTML = `<a href="${watch}" target="_blank" rel="noopener" aria-label="Ver el resumen en YouTube" style="position:absolute;inset:0;background:url('https://i.ytimg.com/vi/${encodeURIComponent(v.videoId)}/hqdefault.jpg') center/cover"></a><span style="position:absolute;inset:0;background:rgba(5,7,10,.55);pointer-events:none"></span><a class="btn btn-primary" style="position:relative" href="${watch}" target="_blank" rel="noopener">Ver resumen en YouTube</a>`;
+      };
+      if (!v.embeddable) blocked();
+      else {
+        player.innerHTML = '<div id="ytplayer"></div>';
+        const YT = await loadYT();
+        new YT.Player('ytplayer', { videoId: v.videoId, host: 'https://www.youtube-nocookie.com', playerVars: { rel: 0, playsinline: 1 },
+          events: { onError: e => { if ([100, 101, 150, 153].includes(e.data)) blocked(); } } });
+      }
+      document.getElementById('wrongVideo').addEventListener('click', () => {
+        // Se descarta este vídeo para este partido y se busca de nuevo (1 búsqueda de YouTube)
+        banOfficialVideo('fb-' + f.fixture.id, v.videoId);
+        showVideo(true);
+      });
+      ld['@graph'] = ld['@graph'].filter(g => g['@type'] !== 'VideoObject');
+      ld['@graph'].push({ '@type': 'VideoObject', name: v.title, description: 'Resumen del ' + matchName, thumbnailUrl: `https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`, uploadDate: v.published, duration: v.duration, embedUrl: 'https://www.youtube-nocookie.com/embed/' + v.videoId });
+      document.getElementById('ldjson').textContent = JSON.stringify(ld);
+    } catch (e) {
+      player.innerHTML = `<span style="color:#8A94A3;padding:16px;text-align:center">No se ha podido buscar el resumen: ${esc(e.message)}</span>`;
+    }
+  };
+  showVideo(false);
+}
+
+// Modo revisión (?debug=1): muestra todos los candidatos con su puntuación y motivos
+function renderDebug(v){
+  if (!new URLSearchParams(location.search).has('debug')) return;
+  let box = document.getElementById('ytDebug');
+  if (!box) { box = document.createElement('section'); box.id = 'ytDebug'; box.className = 'card'; document.getElementById('resumen').after(box); }
+  box.innerHTML = `<h2 class="section-title" style="font-size:16px">Revisión del resumen · estado: ${esc(v.status)}</h2>
+    <p class="faq-meta"><b>Fuentes oficiales:</b> ${(v.sources || []).map(s => s.error ? `${esc(s.handle)} → <b style="color:#F97066">${esc(s.error)}</b>` : `${esc(s.handle)} → ${esc(s.channelTitle)} (${esc(s.channelId)})${s.verified ? '' : ' · <b>pendiente de confirmar</b>'}`).join(' · ') || 'ninguna configurada'}</p>
+    <table class="table"><thead><tr><th></th><th>Vídeo del canal oficial</th><th>Motivo</th></tr></thead><tbody>
+    ${(v.candidates || []).map(c => `<tr${c.chosen ? ' class="hl"' : ''}><td>${c.chosen ? '✓' : (c.why && c.why.length ? '✕' : '')}</td>
+      <td><a href="https://www.youtube.com/watch?v=${encodeURIComponent(c.videoId)}" target="_blank" rel="noopener">${esc(c.title)}</a><br><span class="muted">${esc(c.channel)}${c.sec ? ' · ' + Math.round(c.sec / 60) + ' min' : ''}</span></td>
+      <td class="muted" style="font-size:12px">${esc((c.why || []).join(' · ') || (c.chosen ? 'elegido' : 'válido'))}</td></tr>`).join('') || '<tr><td colspan="3" class="muted">Ningún vídeo de estos canales menciona a los dos equipos desde el inicio del partido.</td></tr>'}
+    </tbody></table>`;
+}
+
+let ytApi = null;
+function loadYT(){
+  return ytApi || (ytApi = new Promise(resolve => {
+    if (window.YT && window.YT.Player) return resolve(window.YT);
+    window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+    const sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(sc);
+  }));
+}
+
+/* ---------- Tema y arranque ---------- */
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click', () => {
+  const dark = document.documentElement.getAttribute('data-theme') !== 'dark';
+  if (dark) document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
+  try { localStorage.setItem('ctv_theme', dark ? 'dark' : 'light'); } catch (e) {}
+});
+document.getElementById('shareBtn').addEventListener('click', async () => { try { if (navigator.share) await navigator.share({ title: document.title, url: location.href }); else await navigator.clipboard.writeText(location.href); } catch (e) {} });
+
+// Si un escudo o logo no carga, se oculta en lugar de mostrar el icono de imagen rota
+document.addEventListener('error', e => { if (e.target.tagName === 'IMG') e.target.style.visibility = 'hidden'; }, true);
+const id = new URLSearchParams(location.search).get('id');
+if (id) renderMatch(id); else renderPicker();
+
+</script>
+</body>
+</html>
