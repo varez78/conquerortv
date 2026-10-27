@@ -11,9 +11,9 @@
     "not_found_handling": "404-page"
   },
   // Memoria compartida (resúmenes encontrados, canales de YouTube, aviso de cupo agotado).
-  // Sustituye REEMPLAZAR_CON_ID_DE_KV por el ID del espacio KV "CONQUEROR_CACHE" que crees en Cloudflare.
+  // Sustituye e79b312fa6b84b96ba2bf05b1f259c6a por el ID del espacio KV "CONQUEROR_CACHE" que crees en Cloudflare.
   "kv_namespaces": [
-    { "binding": "CACHE", "id": "REEMPLAZAR_CON_ID_DE_KV" }
+    { "binding": "CACHE", "id": "e79b312fa6b84b96ba2bf05b1f259c6a" }
   ],
   // Tarea automática cada 10 minutos: precarga los partidos del día
   "triggers": { "crons": ["*/10 * * * *"] },
