@@ -85,7 +85,14 @@ const DAILY_BUDGET = 90;
 function ttlFor(host, path) {
   const d = path.match(/[?&]date=(\d{4}-\d{2}-\d{2})/);
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid' }).format(new Date());
-  if (d) return d[1] < today ? 24 * 3600 : 30 * 60;           // días pasados: 24 h · hoy y mañana: 30 min
+  if (d) {
+    // Días pasados: 24 h · mañana: 6 h · hoy: 20 min en horas de partidos (12-24 h España), 3 h el resto.
+    // Así el total diario ronda ~45 peticiones y no agota las 100 gratuitas.
+    if (d[1] < today) return 24 * 3600;
+    if (d[1] > today) return 6 * 3600;
+    const h = parseInt(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', hour: '2-digit', hour12: false }).format(new Date()), 10);
+    return h >= 12 ? 20 * 60 : 3 * 3600;
+  }
   if (/[?&]id=\d+/.test(path)) return 10 * 60;                 // un partido concreto: 10 min (30 días si ya terminó)
   if (/\/standings/.test(path)) return 12 * 3600;
   if (/[?&]next=/.test(path)) return 12 * 3600;
