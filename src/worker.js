@@ -71,6 +71,19 @@ async function handleApi(request, env, ctx, url) {
 
   // País del visitante (por si la página lo necesita)
   if (p === '/api/country') return json({ country: (request.cf && request.cf.country) || 'ES' });
+  // Diagnóstico: estado del cupo (no gasta peticiones de datos; /status de API-Sports no cuenta)
+  if (p === '/api/diag') {
+    const out = { utcDay: utcDay(), hasKey: !!env.API_FOOTBALL_KEY, keyLen: (env.API_FOOTBALL_KEY || '').length };
+    for (const h of Object.keys(UPSTREAM)) {
+      out[h] = { budgetUsed: DAILY_BUDGET - (await budgetLeft(env, h)), limitFlag: !!(await env.CACHE.get('limit:' + h)) };
+    }
+    try {
+      const r = await fetch(UPSTREAM.football + '/status', { headers: { 'x-apisports-key': env.API_FOOTBALL_KEY || '' } });
+      const j = await r.json();
+      out.apiStatus = { errors: j.errors, requests: j.response && j.response.requests, plan: j.response && j.response.subscription };
+    } catch (e) { out.apiStatus = String(e); }
+    return json(out);
+  }
 
   return json({ errors: ['Ruta no encontrada'] }, 404);
 }
