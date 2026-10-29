@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evento – ConquerorTV</title>
+<meta name="description" content="Resumen en vídeo oficial, resultado y dónde verlo en España.">
+<link rel="canonical" href="https://conquerortv.example/">
+<script>document.documentElement.setAttribute('data-theme','dark');try{if(localStorage.getItem('ctv_theme')==='light')document.documentElement.removeAttribute('data-theme')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json" id="ldjson">{}</script>
+<style>
+/* ===== Tokens de diseño ===== */
+:root{
+  --bg:#F5F6F8; --surface:#FFFFFF; --surface-2:#EEF0F3; --surface-up:#FAFBFC;
+  --line:#E1E4EA; --line-soft:#E3E6EB; --btn-line:#C9CED6;
+  --text:#101418; --text-2:#344054; --muted:#5B6574; --muted-2:#5F6B7A;
+  --red:#D92D20; --red-soft:#F04438;
+  --home:#2E6BE6; --away:#E5484D;
+  --shadow:0 1px 2px rgba(16,20,24,.06);
+  --radius:16px;
+  --font-display:'Barlow Condensed',sans-serif; --font-body:Inter,system-ui,sans-serif;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#0B0F14; --surface:#141A21; --surface-2:#1C232C; --surface-up:#11161C;
+  --line:#262F3A; --line-soft:#1E2630; --btn-line:#344054;
+  --text:#F2F4F7; --text-2:#C9D1DB; --muted:#9AA4B2; --muted-2:#8A94A3;
+  --red:#D92D20; --red-soft:#F97066;
+  --home:#528BFF; --away:#F97066;
+  --shadow:none;
+  color-scheme:dark;
+}
+
+/* ===== Base ===== */
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.45}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid #528BFF;outline-offset:2px}
+img{display:block;max-width:100%}
+h1,h2,h3{margin:0;line-height:1.2}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+.muted{color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ===== Cabecera ===== */
+.site-header{background:var(--surface);border-bottom:1px solid var(--line-soft)}
+.site-header .wrap{display:flex;align-items:center;gap:20px;min-height:64px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none!important}
+.brand-mark{width:32px;height:32px;border-radius:9px;background:var(--red);display:flex;align-items:center;justify-content:center}
+.brand-name{font-family:var(--font-display);font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:.02em}
+.brand-name span{color:var(--red-soft);font-weight:600;margin-left:4px}
+.main-nav{display:flex;gap:18px;font-size:14px;font-weight:600}
+.header-tools{margin-left:auto;display:flex;align-items:center;gap:8px}
+.search{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:10px;color:var(--muted);min-width:220px}
+.search input{border:0;background:transparent;color:var(--text);font:inherit;outline:none;width:100%}
+.icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:transparent;display:inline-flex;align-items:center;justify-content:center}
+.theme-btn .sun{display:none}
+:root[data-theme="dark"] .theme-btn .sun{display:block}
+:root[data-theme="dark"] .theme-btn .moon{display:none}
+
+/* ===== Estructura de la página ===== */
+.page{padding-top:20px;padding-bottom:64px;display:flex;flex-direction:column;gap:24px}
+.breadcrumb{font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;padding:0;margin:0;list-style:none}
+.breadcrumb li+li::before{content:"›";margin-right:8px}
+/* Escritorio: contenido + lateral independientes. Móvil: una sola columna ordenada por prioridad de negocio */
+.layout{display:flex;gap:24px;align-items:flex-start}
+.col-main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:24px}
+.col-side{flex:0 0 340px;display:flex;flex-direction:column;gap:20px}
+@media (max-width:960px){
+  .layout{flex-direction:column;align-items:stretch}
+  .col-main,.col-side{display:contents}
+  .a-video{order:1}.a-videos{order:2}.a-moments{order:3}.a-upcoming{order:4}.a-report{order:5}.a-stats{order:6}
+  .a-lineups{order:7}.a-standings{order:8}.a-shop{order:9}.a-tickets{order:10}.a-more{order:11}
+}
+
+/* ===== Componentes ===== */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px}
+.section-title{font-size:18px;font-weight:700;margin-bottom:12px;display:flex;align-items:baseline;gap:12px}
+.section-title .more-link{margin-left:auto;font-size:13px;font-weight:500;color:var(--muted)}
+.sponsored-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+.crest{border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex:0 0 auto}
+.crest.home{background:#1D4ED8}.crest.away{background:#B42318}
+.platform{height:28px;padding:0 9px;border-radius:6px;display:inline-flex;align-items:center;font-weight:800;font-size:12px;flex:0 0 auto}
+.platform.dazn{background:#F8F80D;color:#0B0F14}
+.platform.movistar{background:#019DF4;color:#fff}
+.btn{height:40px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;border:1px solid transparent;text-decoration:none!important;white-space:nowrap}
+.btn-primary{background:var(--red);color:#fff}
+.btn-light{background:var(--text);color:var(--bg)}
+.btn-outline{border-color:var(--btn-line)}
+
+/* Marcador */
+.scoreboard{display:flex;flex-direction:column;gap:18px;padding:24px clamp(16px,3vw,32px)}
+.score-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.score-meta strong{color:var(--text);font-weight:600}
+.status-tag{margin-left:auto;font-size:12px;font-weight:700;letter-spacing:.06em;padding:4px 8px;border-radius:6px;border:1px solid var(--btn-line);color:var(--text-2)}
+.score-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px}
+.team{display:flex;align-items:center;gap:16px;min-width:0}
+.team.home{justify-content:flex-end;text-align:right}
+.team-name{font-size:clamp(18px,2.2vw,28px);font-weight:700}
+.team .crest{width:64px;height:64px;font-size:18px}
+.score{font-family:var(--font-display);font-weight:700;font-size:clamp(48px,6vw,72px);line-height:1}
+.score .sep{color:var(--muted-2)}
+.scorers{display:grid;grid-template-columns:minmax(0,1fr) 120px minmax(0,1fr);gap:16px;font-size:13px;color:var(--muted)}
+.scorers .home{text-align:right}
+@media (max-width:600px){
+  .team,.team.home{flex-direction:column;justify-content:center;text-align:center;gap:8px}
+  .team.home .crest{order:-1}
+  .team .crest{width:52px;height:52px;font-size:15px}
+  .team-name{font-size:15px}
+  .score{font-size:48px}
+  .scorers{grid-template-columns:1fr;text-align:center}
+  .scorers .home,.scorers .away{text-align:center}
+  .scorers .gap{display:none}
+  .status-tag{margin-left:0}
+}
+
+/* Vídeo */
+.video-block{display:flex;flex-direction:column;gap:12px}
+.video-block h1{font-size:clamp(21px,2.4vw,26px)}
+.player{position:relative;width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#05070A;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:#F2F4F7}
+.player .badge{position:absolute;font-size:12px;font-weight:600;background:rgba(11,15,20,.85);padding:4px 8px;border-radius:6px}
+.player .channel{top:14px;left:14px}
+.player .duration{bottom:14px;right:14px}
+.play-btn{width:84px;height:84px;border-radius:50%;border:0;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center}
+@media (max-width:600px){.play-btn{width:64px;height:64px}}
+.sponsor-strip{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;background:var(--surface-up);border:1px solid var(--line);flex-wrap:wrap}
+.sponsor-strip p{flex:1 1 240px;margin:0;font-size:14px;color:var(--text-2)}
+
+/* Más vídeos */
+.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.video-card{display:flex;flex-direction:column;gap:6px}
+.thumb{aspect-ratio:16/9;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:flex-end;justify-content:flex-end;padding:8px}
+.thumb span{font-size:11px;color:#F2F4F7;background:rgba(11,15,20,.85);padding:2px 6px;border-radius:5px}
+.video-card b{font-size:14px}.video-card small{font-size:12px;color:var(--muted)}
+@media (max-width:600px){
+  .video-grid{display:flex;overflow-x:auto;margin-right:-16px;padding-right:16px;scroll-snap-type:x mandatory}
+  .video-card{flex:0 0 200px;scroll-snap-align:start}
+}
+
+/* Momentos clave */
+.timeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.timeline li{display:grid;grid-template-columns:48px 28px 1fr;align-items:center;gap:8px}
+.minute{font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--muted)}
+.timeline .crest{width:24px;height:24px;font-size:9px}
+.yellow{display:inline-block;width:10px;height:14px;background:#FDB022;border-radius:2px;vertical-align:-2px;margin-right:6px}
+
+/* Crónica */
+.report p{margin:0;color:var(--text-2);line-height:1.7;max-width:760px}
+
+/* Estadísticas */
+.stat{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.stat-head{display:flex;justify-content:space-between;font-size:13px}
+.stat-bar{display:flex;gap:4px;height:8px}
+.stat-bar .h{background:var(--home);border-radius:4px 0 0 4px}
+.stat-bar .a{background:var(--away);border-radius:0 4px 4px 0}
+
+/* Alineaciones */
+.lineups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;font-size:14px}
+.lineups div{display:flex;flex-direction:column;gap:6px}
+details.collapsible summary{cursor:pointer;font-size:18px;font-weight:700;list-style:none}
+details.collapsible summary::after{content:"＋";float:right;color:var(--muted)}
+details.collapsible[open] summary::after{content:"－"}
+details.collapsible[open] summary{margin-bottom:12px}
+
+/* Próximos partidos (afiliado) */
+.upcoming-item{display:flex;flex-direction:column;gap:8px;padding:14px 0;border-bottom:1px solid var(--line)}
+.upcoming-item:first-of-type{padding-top:0}
+.upcoming-item:last-of-type{border-bottom:0}
+.upcoming-item small{font-size:12px;color:var(--muted)}
+.upcoming-item .row{display:flex;align-items:center;gap:8px}
+.upcoming-item .row .label{flex:1;font-size:13px;color:var(--text-2)}
+
+/* Clasificación */
+.table{width:100%;border-collapse:collapse;font-size:14px}
+.table th{font-size:12px;font-weight:500;color:var(--muted);text-align:left;padding:0 0 6px}
+.table td{padding:6px 0;border-top:1px solid var(--line)}
+.table .num{text-align:right;width:44px}
+.table .pos{width:28px;color:var(--muted)}
+.table .hl td{font-weight:700}
+
+/* Tienda (afiliado) */
+.shop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.product{display:flex;flex-direction:column;gap:4px}
+.product .img{aspect-ratio:1;border-radius:12px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted-2)}
+.product b{font-size:13px}.product span{font-size:13px;color:var(--muted)}
+
+/* Entradas */
+.tickets{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1px dashed var(--btn-line);font-size:14px}
+
+/* Más resúmenes */
+.more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.mini{display:flex;flex-direction:column;gap:8px;padding:12px}
+.mini .thumb{border:0}
+.mini .line{display:flex;justify-content:space-between;font-weight:600;font-size:14px}
+.mini .line.lose{color:var(--muted)}
+@media (max-width:600px){
+  .more-grid{grid-template-columns:1fr}
+  .mini{flex-direction:row;align-items:center;gap:12px}
+  .mini .thumb{width:96px;flex:0 0 auto;padding:0}
+  .mini .lines{flex:1;display:flex;flex-direction:column;gap:4px}
+}
+
+/* Preguntas */
+.faq{display:flex;flex-direction:column;gap:12px;max-width:860px;border-top:1px solid var(--line);padding-top:24px}
+.faq .section-title{margin-bottom:4px}
+.key-facts{margin:0 0 4px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.key-facts div{background:var(--surface);padding:10px 14px;display:flex;flex-direction:column;gap:2px}
+.key-facts dt{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-2)}
+.key-facts dd{margin:0;font-size:14px;font-weight:600}
+.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.faq-item h3{font-size:16px;font-weight:700;line-height:1.35}
+.faq-item p{margin:6px 0 0;color:var(--text-2);line-height:1.6}
+.faq-item a{color:var(--text);text-decoration:underline;text-underline-offset:2px}
+.faq-meta{margin:4px 0 0;font-size:12px;color:var(--muted-2)}
+@media (max-width:600px){.key-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Pie */
+.site-footer{background:var(--surface);border-top:1px solid var(--line-soft)}
+.site-footer .wrap{display:flex;gap:24px;flex-wrap:wrap;padding-top:24px;padding-bottom:24px;font-size:13px;color:var(--muted)}
+
+@media (max-width:760px){
+  .main-nav,.search{display:none}
+}
+
+.picker-row{gap:6px}
+.player iframe{position:absolute;inset:0}
+
+.where{display:flex;flex-direction:column;gap:4px}
+.where-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.where-row{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface-up);flex-wrap:wrap}
+.where-info{flex:1 1 180px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.where-info span{font-size:13px;color:var(--muted)}
+.where-actions{display:flex;gap:8px;flex-wrap:wrap}
+.platform.rtve{background:#E5222D;color:#fff}
+.live-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:6px;background:rgba(240,68,56,.18);color:#FDA29B;font-size:12px;font-weight:700;letter-spacing:.08em}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#F97066;display:inline-block;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.player iframe,#ytplayer{position:absolute;inset:0;width:100%;height:100%;border:0}
+.link-btn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="ConquerorTV, inicio">
+      <span class="brand-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg></span>
+      <span class="brand-name">Conqueror<span>TV</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Secciones">
+      <a href="/">Resúmenes</a><a href="/">En directo</a><a href="/">Fútbol</a><a href="/">Baloncesto</a><a href="/">Motor</a>
+    </nav>
+    <div class="header-tools">
+      <label class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <span class="sr-only">Buscar</span>
+        <input type="search" placeholder="Busca un equipo o partido">
+      </label>
+      <button class="icon-btn theme-btn" id="themeBtn" type="button" aria-label="Activar modo claro">
+        <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
+      </button>
+      <button class="icon-btn" id="shareBtn" type="button" aria-label="Compartir">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5h14v-5"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<main class="wrap page" id="app" aria-live="polite"></main>
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© ConquerorTV · Resúmenes oficiales de canales con derechos</span>
+    <a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cómo ganamos dinero (afiliación)</a>
+  </div>
+</footer>
+<script>
+// ===== Dónde verlo (guía de emisiones) =====
+// La web solo enlaza a la plataforma oficial: el usuario entra con su propia cuenta. Nunca se piden credenciales.
+// Pega aquí tus enlaces de afiliado; si están vacíos, "Suscríbete" lleva a la web de la plataforma.
+const AFFILIATE_LINKS = { dazn: '', movistar: '', prime: '', leaguepass: '' };
+const PLATFORMS = {
+  dazn:       { name: 'DAZN', color: '#F8F80D', fg: '#0B0F14', url: 'https://www.dazn.com/es-ES/home' },
+  movistar:   { name: 'Movistar Plus+', short: 'M+', color: '#019DF4', fg: '#FFFFFF', url: 'https://ver.movistarplus.es/', signup: 'https://www.movistarplus.es/' },
+  prime:      { name: 'Prime Video', short: 'Prime', color: '#1A98FF', fg: '#FFFFFF', url: 'https://www.primevideo.com/' },
+  leaguepass: { name: 'NBA League Pass', short: 'NBA', color: '#1D428A', fg: '#FFFFFF', url: 'https://www.nba.com/watch/league-pass-stream' },
+  rtve:       { name: 'RTVE Play', short: 'RTVE', color: '#E5222D', fg: '#FFFFFF', url: 'https://www.rtve.es/play/', free: true }
+};
+// España, temporada 2026-27 (revisar cada temporada: los derechos cambian)
+const BROADCAST_ES = {
+  140: [{ p: 'movistar', note: 'Todos los partidos (LALIGA TV por M+)' }, { p: 'dazn', note: '5 partidos por jornada (DAZN LALIGA)' }],
+  141: [{ p: 'movistar', note: 'LALIGA TV Hypermotion' }, { p: 'dazn', note: 'Según el partido' }],
+  143: [{ p: 'movistar', note: 'Todos los partidos' }, { p: 'rtve', note: 'Algunos partidos en abierto' }],
+  2:   [{ p: 'movistar', note: 'Liga de Campeones por M+' }],
+  3:   [{ p: 'movistar', note: 'Liga de Campeones por M+' }],
+  848: [{ p: 'movistar', note: 'Liga de Campeones por M+' }],
+  39:  [{ p: 'dazn', note: 'Todos los partidos' }, { p: 'movistar', note: '1 partido por jornada' }],
+  135: [{ p: 'dazn', note: 'Todos los partidos' }, { p: 'movistar', note: '1 partido por jornada' }],
+  78:  [{ p: 'dazn', note: 'Todos los partidos' }],
+  61:  [{ p: 'dazn', note: 'Todos los partidos' }],
+  acb: [{ p: 'movistar', note: 'Liga Endesa (paquete Baloncesto)' }, { p: 'dazn', note: 'Plan Baloncesto de DAZN' }],
+  euroleague: [{ p: 'movistar', note: 'Los mejores partidos de cada jornada' }],
+  nba: [{ p: 'prime', note: 'Partidos seleccionados' }, { p: 'dazn', note: 'Unos 180 partidos de temporada regular' }, { p: 'leaguepass', note: 'Todos los partidos' }],
+  f1:  [{ p: 'dazn', note: 'Todas las sesiones (DAZN F1)' }],
+  motogp: [{ p: 'dazn', note: 'Todas las sesiones' }]
+};
+function broadcastersFor(it){
+  const k = it.league.key;
+  if (BROADCAST_ES[k]) return BROADCAST_ES[k];
+  if (/euroleague/i.test(it.league.name || '')) return BROADCAST_ES.euroleague;
+  return [];
+}
+// ===== País del visitante (para elegir resúmenes que se puedan ver allí) =====
+// Lo detecta el servidor de Cloudflare
+const TZ_COUNTRY = { 'Europe/Madrid': 'ES', 'Atlantic/Canary': 'ES', 'Europe/Rome': 'IT', 'Europe/Paris': 'FR', 'Europe/Berlin': 'DE',
+  'Europe/London': 'GB', 'Europe/Lisbon': 'PT', 'Europe/Amsterdam': 'NL', 'Europe/Brussels': 'BE', 'Europe/Zurich': 'CH',
+  'Europe/Vienna': 'AT', 'Europe/Athens': 'GR', 'Europe/Istanbul': 'TR', 'America/New_York': 'US', 'America/Chicago': 'US',
+  'America/Denver': 'US', 'America/Los_Angeles': 'US', 'America/Mexico_City': 'MX', 'America/Argentina/Buenos_Aires': 'AR',
+  'America/Bogota': 'CO', 'America/Santiago': 'CL', 'America/Lima': 'PE', 'America/Sao_Paulo': 'BR' };
+let viewerCountryP = null;
+function viewerCountry(){
+  // El país lo detecta Cloudflare a partir de la conexión (sin servicios de terceros)
+  return viewerCountryP || (viewerCountryP = fetch('/api/country').then(r => r.json()).then(j => j.country || 'ES').catch(() => 'ES'));
+}
+// Canal válido: liga/cadena oficial (lista) o canal oficial de uno de los dos equipos
+function channelOk(it, ch){
+  if (YT_OFFICIAL.test(ch)) return true;
+  if (it.kind !== 'match') return false;
+  const c = NORM(ch);
+  return [it.home.name, it.away.name].some(n => teamWords(n).some(w => w.length > 3 && c.includes(w)));
+}
+// Preferencia: canal de la competición > canal de club > cadena de TV
+function channelRank(it, ch){
+  const lg = NORM(it.league.name), c = NORM(ch);
+  if (c === lg || (lg.includes('motogp') && c === 'motogp') || (lg.includes('formula') && /formula 1|^f1$/.test(c))) return 0;
+  if (/laliga|premier league|serie a|bundesliga|ligue 1|uefa|euroleague|acb|liga endesa|^nba$/.test(c)) return 1;
+  if (!YT_OFFICIAL.test(ch)) return 2;   // canal de club
+  return 3;                               // cadenas de TV (más bloqueos por país)
+}
+
+// ===================== Resúmenes SOLO de fuentes oficiales =====================
+// Los busca el servidor (Cloudflare) en los canales oficiales de YouTube: la clave de YouTube no está en el navegador.
+const offNorm = t => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+function bannedFor(key){ try { return JSON.parse(localStorage.getItem('ctv_ytban_' + key)) || []; } catch (e) { return []; } }
+function banOfficialVideo(key, videoId){
+  const l = bannedFor(key); if (!l.includes(videoId)) l.push(videoId);
+  try { localStorage.setItem('ctv_ytban_' + key, JSON.stringify(l)); } catch (e) {}
+}
+async function findOfficialHighlight(ev, region, opts = {}){
+  const ck = 'ctv_hl_' + ev.key;
+  let c = null; try { c = JSON.parse(localStorage.getItem(ck)); } catch (e) {}
+  if (!opts.force && c && (c.status === 'ok' || Date.now() - c.ts < 10 * 60000) && !bannedFor(ev.key).includes(c.videoId)) return c;
+  const res = await fetch('/api/highlight', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...ev, banned: bannedFor(ev.key) }) });
+  const out = await res.json();
+  if (out.errors) throw new Error([].concat(out.errors).join(' · '));
+  out.ts = Date.now();
+  try { localStorage.setItem(ck, JSON.stringify(out)); } catch (e) {}
+  return out;
+}
+// ==============================================================================
+
+
+// Mapea un evento de la portada a la búsqueda de resumen oficial
+const F1_SESSION = { Race: 'race', Qualifying: 'qualifying', Sprint: 'sprint', SprintQualifying: 'sprintq', SprintShootout: 'sprintq', FirstPractice: 'fp1', SecondPractice: 'fp2', ThirdPractice: 'fp3' };
+function officialEventFor(it){
+  const lg = it.league || {};
+  let sourceKey = lg.key;
+  if (/euroleague/i.test(lg.name || '')) sourceKey = 'euroleague';
+  const base = { key: it.id, sourceKey, start: it.start, women: /women|femenin|wnba|liga f/i.test(lg.name || ''), youth: /u\d{2}|youth|juvenil/i.test(lg.name || '') };
+  if (it.kind === 'match') return { ...base, kind: 'match', home: it.home.name, away: it.away.name, hg: it.home.score, ag: it.away.score };
+  const stem = w => offNorm(w).slice(0, 5);
+  if (lg.key === 'f1') {
+    const words = offNorm(it.title).split(/[^a-z]+/).filter(w => w.length > 2 && !['grand', 'prix', 'gran', 'premio'].includes(w));
+    return { ...base, kind: 'event', eventWords: words.slice(0, 1).map(stem), session: F1_SESSION[it.sessionKey] || '' };
+  }
+  if (lg.key === 'motogp') {
+    return { ...base, kind: 'event', eventWords: [stem(it.country || it.title)], session: /sprint/i.test(it.round || '') ? 'sprint' : 'race' };
+  }
+  return { ...base, kind: 'event', eventWords: [] };
+}
+async function findSummary(it){
+  const region = await viewerCountry();
+  const r = await findOfficialHighlight(officialEventFor(it), region);
+  return r.status === 'ok' ? { videoId: r.videoId, channel: r.channel, title: r.title, blocked: !r.embeddable } : { videoId: null, status: r.status };
+}
+
+// País del circuito (como lo nombra Jolpica) → código ISO para la bandera
+const COUNTRY_ISO = {
+  'Australia': 'au', 'China': 'cn', 'Japan': 'jp', 'Bahrain': 'bh', 'Saudi Arabia': 'sa', 'USA': 'us', 'United States': 'us',
+  'Italy': 'it', 'Monaco': 'mc', 'Spain': 'es', 'Canada': 'ca', 'Austria': 'at', 'UK': 'gb', 'United Kingdom': 'gb',
+  'Belgium': 'be', 'Hungary': 'hu', 'Netherlands': 'nl', 'Azerbaijan': 'az', 'Singapore': 'sg', 'Mexico': 'mx',
+  'Brazil': 'br', 'Qatar': 'qa', 'UAE': 'ae', 'United Arab Emirates': 'ae', 'France': 'fr', 'Germany': 'de',
+  'Portugal': 'pt', 'Turkey': 'tr', 'Russia': 'ru', 'Vietnam': 'vn', 'South Africa': 'za', 'Argentina': 'ar', 'Korea': 'kr',
+  'Thailand': 'th', 'Indonesia': 'id', 'Malaysia': 'my', 'San Marino': 'sm', 'Czech Republic': 'cz', 'Czechia': 'cz', 'Kazakhstan': 'kz', 'India': 'in', 'Great Britain': 'gb', 'England': 'gb'
+};
+function flagUrl(country){ const c = COUNTRY_ISO[country]; return c ? 'https://flagcdn.com/w80/' + c + '.png' : ''; }
+
+const isNBA = g => g.league && g.league.name === 'NBA' && /usa|united states/i.test((g.country && g.country.name) || '');
+function normBasket(g){
+  const s = g.status.short;
+  const LIVE = ['Q1','Q2','Q3','Q4','OT','BT','HT'];
+  const st = LIVE.includes(s) ? 'live' : s === 'NS' ? 'up' : 'done';
+  let clock = null;
+  if (st === 'live') clock = s === 'HT' ? 'Descanso' : s === 'BT' ? 'Pausa' : s === 'OT' ? 'Prórroga' : s + (g.status.timer ? ' · ' + g.status.timer + '′' : '');
+  const labels = { FT: 'Final', AOT: 'Final (prórroga)', POST: 'Aplazado', CANC: 'Cancelado', SUSP: 'Suspendido', ABD: 'Abandonado', AWD: 'Adjudicado' };
+  const start = g.date || (g.timestamp ? new Date(g.timestamp * 1000).toISOString() : null);
+  return {
+    id: 'bk-' + g.id, kind: 'match', state: st, start, clock,
+    label: labels[s] || g.status.long,
+    // La NBA llega dentro de la API de baloncesto: le damos su propia clave para el menú
+    league: { key: isNBA(g) ? 'nba' : 'bk-' + g.league.id, name: g.league.name, logo: g.league.logo, country: g.country && g.country.name },
+    round: [g.stage, g.week].filter(Boolean).join(' · '),
+    venue: g.country ? g.country.name : '',
+    home: { name: g.teams.home.name, logo: g.teams.home.logo, score: g.scores && g.scores.home ? g.scores.home.total : null },
+    away: { name: g.teams.away.name, logo: g.teams.away.logo, score: g.scores && g.scores.away ? g.scores.away.total : null }
+  };
+}
+
+const FOOTBALL_FEATURED = [
+  { id: 140, name: 'LaLiga' }, { id: 39, name: 'Premier League' }, { id: 135, name: 'Serie A' },
+  { id: 78, name: 'Bundesliga' }, { id: 61, name: 'Ligue 1' }, { id: 2, name: 'Champions League' },
+  { id: 3, name: 'Europa League' }, { id: 848, name: 'Conference League' }, { id: 141, name: 'LaLiga Hypermotion' },
+  { id: 143, name: 'Copa del Rey' }
+];
+const FD_COMP = { PD: 140, PL: 39, SA: 135, BL1: 78, FL1: 61, CL: 2 };
+function fdItem(m){
+  const id = FD_COMP[m.competition.code], feat = FOOTBALL_FEATURED.find(l => l.id === id);
+  const dur = m.score && m.score.duration;
+  return {
+    id: 'fd-' + m.id, kind: 'match', state: 'done', start: m.utcDate,
+    label: dur === 'PENALTY_SHOOTOUT' ? 'Final (penaltis)' : dur === 'EXTRA_TIME' ? 'Final (prórroga)' : 'Final',
+    league: { key: id, name: feat ? feat.name : m.competition.name, logo: m.competition.emblem },
+    round: m.matchday ? 'Jornada ' + m.matchday : (m.stage || ''), venue: '',
+    home: { name: m.homeTeam.shortName || m.homeTeam.name, logo: m.homeTeam.crest, score: m.score.fullTime.home },
+    away: { name: m.awayTeam.shortName || m.awayTeam.name, logo: m.awayTeam.crest, score: m.score.fullTime.away }
+  };
+}
+
+const COUNTRY_ES = { 'Spain': 'España', 'France': 'Francia', 'Italy': 'Italia', 'Netherlands': 'Países Bajos', 'Germany': 'Alemania',
+  'UK': 'Gran Bretaña', 'Great Britain': 'Gran Bretaña', 'Hungary': 'Hungría', 'Czech Republic': 'Chequia', 'Czechia': 'Chequia',
+  'Japan': 'Japón', 'Malaysia': 'Malasia', 'Thailand': 'Tailandia', 'USA': 'las Américas', 'United States': 'las Américas',
+  'Brazil': 'Brasil', 'Kazakhstan': 'Kazajistán', 'Turkey': 'Turquía', 'India': 'India' };
+// [patrón en el nombre de la sesión, etiqueta, duración en minutos, ¿es carrera?]
+const MGP_SESSIONS = [
+  [/warm\s*up/i, 'Warm up', 10, false], [/free practice\s*1|fp1/i, 'Libres 1', 45, false], [/free practice\s*2|fp2/i, 'Libres 2', 30, false],
+  [/qualifying\s*1|q1/i, 'Q1', 15, false], [/qualifying\s*2|q2/i, 'Q2', 15, false], [/sprint/i, 'Sprint', 25, true],
+  [/practice/i, 'Práctica', 60, false], [/\bGP\b|grand prix|race/i, 'Carrera', 50, true]
+];
+function mgpSession(name){ return MGP_SESSIONS.find(([re]) => re.test(name)) || [null, name, 60, false]; }
+// Los resultados llegan como texto: se extraen las 3 primeras posiciones de forma tolerante
+function parseResultText(txt){
+  const lines = String(txt || '').split(/\r?\n|<br\s*\/?>/i).map(l => l.trim()).filter(l => l && /[a-z]/i.test(l) && !/^(pos|position|rider|driver)\b/i.test(l));
+  const out = [];
+  for (const line of lines) {
+    let pos, name, team = '', info = '';
+    const parts = line.split(/\s*[|\t;]\s*/).filter(Boolean);
+    if (parts.length >= 3) {
+      pos = /^\d+$/.test(parts[0]) ? parts.shift() : String(out.length + 1);
+      name = parts[0]; info = parts[parts.length - 1]; team = parts.length > 2 ? parts[1] : '';
+    } else {
+      const m = line.match(/^(\d+)[.)\s:-]*\s*(.*)$/);
+      pos = m ? m[1] : String(out.length + 1);
+      let rest = m ? m[2] : line;
+      const tm = rest.match(/\(([^)]+)\)/); if (tm) { team = tm[1]; rest = rest.replace(tm[0], ' '); }
+      const t = rest.match(/(\+?\d+[:.]\d[\d:.]*|\+?\d+\s*laps?|DNF|DNS|DSQ)\s*$/i); if (t) { info = t[1]; rest = rest.slice(0, t.index); }
+      name = rest.replace(/[,\-–|]+\s*$/, '').replace(/\s+/g, ' ').trim();
+    }
+    if (name) out.push({ pos, name: team ? name + ' · ' + team : name, logo: '', info });
+    if (out.length === 3) break;
+  }
+  return out;
+}
+function normMotoGP(e, now){
+  const [, label, mins, isRace] = mgpSession(String(e.strEvent || '').replace(e.strCountry || '', ''));
+  const start = e.strTimestamp ? (/[zZ]|[+-]\d\d:?\d\d$/.test(e.strTimestamp) ? e.strTimestamp : e.strTimestamp + 'Z') : (e.dateEvent + 'T' + (e.strTime || '12:00:00') + 'Z');
+  const t = new Date(start).getTime();
+  const finished = /^(FT|Match Finished|Finished)$/i.test(e.strStatus || '');
+  const st = finished || now > t + mins * 60000 ? 'done' : now >= t ? 'live' : 'up';
+  const country = e.strCountry || '';
+  return {
+    id: 'mgp-' + e.idEvent, kind: 'event', state: st, start, gp: e.intRound, isRace,
+    clock: st === 'live' ? 'En curso' : null, label: st === 'done' ? 'Finalizada' : '',
+    league: { key: 'motogp', name: 'MotoGP', logo: e.strLeagueBadge || '' },
+    title: 'Gran Premio de ' + (COUNTRY_ES[country] || country || e.strEvent),
+    subtitle: label + ' · Ronda ' + e.intRound, round: label,
+    venue: [e.strVenue, (e.strCity || '').split(',')[0]].filter(Boolean).join(', '),
+    flag: flagUrl(country), country,
+    video: e.strVideo || '',
+    ytQuery: 'MotoGP ' + (e.strEvent || '') + ' ' + (e.strSeason || '') + ' highlights',
+    top: st === 'done' ? parseResultText(e.strResult) : []
+  };
+}
+
+/* ================= Página de evento (baloncesto, ACB, F1, MotoGP y fútbol de football-data) =================
+   ?id=<id del evento tal como lo usa la portada>: bk-123 · nba-123 · acb-123 · mgp-123 · fd-123 · f1-2026-5-Race
+   Los datos se leen del evento guardado por la portada (sin gastar peticiones) o, si se entra directamente,
+   se piden al servidor de Cloudflare (que los guarda en caché para todos). */
+const TZ = 'Europe/Madrid';
+const SITE = 'https://conquerortv.example';
+const app = document.getElementById('app');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const loadJSON = k => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+const saveJSON = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const fmt = (iso, o) => new Intl.DateTimeFormat('es-ES', { timeZone: TZ, ...o }).format(new Date(iso));
+const longDate = iso => fmt(iso, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const shortDate = iso => fmt(iso, { weekday: 'short', day: 'numeric', month: 'short' });
+const hour = iso => fmt(iso, { hour: '2-digit', minute: '2-digit' });
+const NORM = t => String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const slug = t => NORM(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const JOLPICA = '/api/jolpica';
+const SPORT_OF = { bk: 'Baloncesto', nba: 'Baloncesto', acb: 'Baloncesto', mgp: 'Motor', f1: 'Motor', fd: 'Fútbol' };
+
+async function getJSON(url){
+  const res = await fetch(url);
+  if (!res.ok && res.status >= 500) throw new Error('El servidor respondió ' + res.status);
+  const j = await res.json();
+  const errs = j.errors && (Array.isArray(j.errors) ? j.errors : Object.values(j.errors));
+  if (errs && errs.length) {
+    const msg = errs.join(' · ');
+    throw new Error(/LIMIT_REACHED|request limit/i.test(msg) ? 'Se ha agotado el cupo diario gratuito de datos. Se renueva a las 01:00 (hora de España).' : /RATE_LIMITED/.test(msg) ? 'Demasiadas consultas seguidas; inténtalo de nuevo en un minuto.' : msg);
+  }
+  return j;
+}
+
+/* ---------- Carga del evento ---------- */
+function storedItem(id){ const m = loadJSON('ctv_items') || {}; return m[id] ? m[id].item : null; }
+function storeItem(it){
+  const m = loadJSON('ctv_items') || {};
+  m[it.id] = { ts: Date.now(), item: it };
+  const keys = Object.keys(m);
+  if (keys.length > 150) keys.sort((a, b) => m[a].ts - m[b].ts).slice(0, keys.length - 150).forEach(k => delete m[k]);
+  saveJSON('ctv_items', m);
+}
+async function loadItem(id){
+  const kind = id.split('-')[0], rest = id.slice(kind.length + 1);
+  const saved = storedItem(id);
+  if (saved && saved.state === 'done' && (saved.kind === 'match' ? saved.home.score != null : (saved.top || []).length)) return saved;   // terminado y con resultado: no hace falta pedir nada
+  try {
+    let it = null;
+    if (kind === 'bk' || kind === 'nba') {
+      const g = ((await getJSON('/api/sports/basketball/games?id=' + encodeURIComponent(rest) + '&timezone=' + encodeURIComponent(TZ))).response || [])[0];
+      it = g && normBasket(g);
+    } else if (kind === 'fd') {
+      const m = await getJSON('/api/fd/v4/matches/' + encodeURIComponent(rest));
+      it = fdItem(m); if (m.venue) it.venue = m.venue;
+      if (m.status && !/FINISHED/.test(m.status)) it.state = /IN_PLAY|PAUSED/.test(m.status) ? 'live' : 'up';
+    } else if (kind === 'acb') {
+      const e = (((await getJSON('/api/tsdb/lookupevent.php?id=' + encodeURIComponent(rest))).events) || [])[0];
+      it = e && acbItem(e);
+    } else if (kind === 'mgp') {
+      const e = (((await getJSON('/api/tsdb/lookupevent.php?id=' + encodeURIComponent(rest))).events) || [])[0];
+      it = e && normMotoGP(e, Date.now());
+    } else if (kind === 'f1') {
+      it = await f1Item(rest);
+    }
+    if (it) { storeItem(it); return it; }
+  } catch (e) { if (saved) return saved; throw e; }
+  if (saved) return saved;
+  return null;
+}
+function acbItem(e){
+  const LIVE = ['Q1', 'Q2', 'Q3', 'Q4', 'OT', 'HT', 'BT', '1H', '2H', 'LIVE', 'IN PLAY'];
+  const s = String(e.strStatus || 'NS').toUpperCase();
+  const st = s === 'NS' || s === 'NOT STARTED' || s === '' ? 'up' : LIVE.includes(s) ? 'live' : 'done';
+  const num = v => (v === null || v === '' || v === undefined ? null : Number(v));
+  const start = e.strTimestamp ? (/[zZ]|[+-]\d\d:?\d\d$/.test(e.strTimestamp) ? e.strTimestamp : e.strTimestamp + 'Z') : (e.dateEvent + 'T' + (e.strTime || '12:00:00') + 'Z');
+  return {
+    id: 'acb-' + e.idEvent, kind: 'match', state: st, start,
+    clock: st === 'live' ? (s === 'HT' ? 'Descanso' : s) : null,
+    label: /^(FT|FINISHED|MATCH FINISHED)$/.test(s) ? 'Final' : s === 'AOT' ? 'Final (prórroga)' : (e.strPostponed === 'yes' ? 'Aplazado' : st === 'done' ? 'Final' : s),
+    league: { key: 'acb', name: 'Liga Endesa (ACB)', logo: e.strLeagueBadge || '', country: 'Spain' },
+    round: 'Jornada ' + e.intRound, venue: [e.strVenue, e.strCity].filter(Boolean).join(', '),
+    home: { name: e.strHomeTeam, logo: e.strHomeTeamBadge, score: num(e.intHomeScore) },
+    away: { name: e.strAwayTeam, logo: e.strAwayTeamBadge, score: num(e.intAwayScore) }
+  };
+}
+// F1: el id es f1-<temporada>-<ronda>-<sesión>
+const F1_SESS = { FirstPractice: ['Libres 1', 60], SecondPractice: ['Libres 2', 60], ThirdPractice: ['Libres 3', 60], SprintQualifying: ['Clasificación sprint', 45],
+  SprintShootout: ['Clasificación sprint', 45], Sprint: ['Sprint', 60], Qualifying: ['Clasificación', 60], Race: ['Carrera', 120] };
+async function f1Item(rest){
+  const [season, round, key] = rest.split('-');
+  const race = (((await getJSON(JOLPICA + '/' + season + '/' + round + '.json')).MRData || {}).RaceTable || {}).Races;
+  const r = race && race[0]; if (!r || !F1_SESS[key]) return null;
+  const src = key === 'Race' ? r : r[key]; if (!src || !src.date) return null;
+  const start = src.date + 'T' + (src.time || '12:00:00Z');
+  const t = new Date(start).getTime(), now = Date.now(), [label, mins] = F1_SESS[key];
+  const st = now < t ? 'up' : now < t + mins * 60000 ? 'live' : 'done';
+  const loc = r.Circuit && r.Circuit.Location ? r.Circuit.Location : {};
+  let top = [];
+  if (st === 'done' && ['Race', 'Qualifying', 'Sprint'].includes(key)) {
+    try {
+      const path = key === 'Race' ? 'results' : key === 'Sprint' ? 'sprint' : 'qualifying';
+      const rr = (((await getJSON(JOLPICA + '/' + season + '/' + round + '/' + path + '.json')).MRData || {}).RaceTable || {}).Races;
+      const rows = rr && rr[0] ? (rr[0].Results || rr[0].SprintResults || rr[0].QualifyingResults || []) : [];
+      top = rows.slice(0, 10).map(x => ({ pos: x.position, name: x.Driver.givenName + ' ' + x.Driver.familyName + ' · ' + x.Constructor.name, logo: '',
+        info: (x.Time && x.Time.time) || x.Q3 || x.Q2 || x.Q1 || x.status || '' }));
+    } catch (e) {}
+  }
+  return { id: 'f1-' + season + '-' + round + '-' + key, sessionKey: key, kind: 'event', state: st, start, gp: round,
+    clock: st === 'live' ? 'En curso' : null, label: st === 'done' ? 'Finalizada' : '',
+    league: { key: 'f1', name: 'Fórmula 1', logo: '' }, title: r.raceName, subtitle: label + ' · Ronda ' + round, round: label,
+    venue: [r.Circuit && r.Circuit.circuitName, loc.locality].filter(Boolean).join(', '), top,
+    flag: flagUrl(loc.country), country: loc.country || '' };
+}
+
+/* ---------- Vídeo (YouTube oficial) ---------- */
+const isoDur = d => { const m = String(d || '').match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/); if (!m) return ''; const h = +m[1] || 0, mi = +m[2] || 0, s = +m[3] || 0; return (h ? h + ':' + String(mi).padStart(2, '0') : mi) + ':' + String(s).padStart(2, '0'); };
+let ytApi = null;
+function loadYT(){
+  return ytApi || (ytApi = new Promise(resolve => {
+    if (window.YT && window.YT.Player) return resolve(window.YT);
+    window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+    const sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(sc);
+  }));
+}
+function renderDebug(v){
+  if (!new URLSearchParams(location.search).has('debug')) return;
+  let box = document.getElementById('ytDebug');
+  if (!box) { box = document.createElement('section'); box.id = 'ytDebug'; box.className = 'card'; box.style.marginTop = '16px'; document.getElementById('app').appendChild(box); }
+  box.innerHTML = '<h2 class="section-title" style="font-size:16px">Revisión del resumen</h2>' +
+    '<p class="muted" style="font-size:13px">Fuentes: ' + esc((v.sources || []).map(s => s.handle + ' → ' + (s.channelTitle || s.error || '?')).join(' · ') || 'ninguna') + ' · estado: <b>' + esc(v.status) + '</b></p>' +
+    '<ul style="font-size:13px;padding-left:18px">' + (v.candidates || []).map(c => '<li><a href="https://www.youtube.com/watch?v=' + encodeURIComponent(c.videoId) + '" target="_blank" rel="noopener">' + esc(c.title) + '</a> — ' + esc((c.why || []).join(' · ') || (c.chosen ? 'elegido' : 'válido')) + '</li>').join('') + '</ul>';
+}
+
+/* ---------- Textos ---------- */
+const labelOf = it => it.kind === 'match' ? it.home.name + ' – ' + it.away.name : it.title;
+function resultTxt(it){
+  if (it.kind === 'match') return it.home.score != null && it.away.score != null ? `${it.home.name} ${it.home.score}-${it.away.score} ${it.away.name}` : labelOf(it);
+  return it.title + ' (' + it.round + ')';
+}
+function seasonOf(it){
+  const y = new Date(it.start).getFullYear(), m = new Date(it.start).getMonth();
+  return it.league.key === 'f1' || it.league.key === 'motogp' ? String(y) : (m >= 7 ? y + '-' + String(y + 1).slice(2) : (y - 1) + '-' + String(y).slice(2));
+}
+
+async function renderEvent(id){
+  app.innerHTML = '<p class="muted">Cargando el evento…</p>';
+  let it;
+  try { it = await loadItem(id); }
+  catch (e) { app.innerHTML = `<div class="card"><b>No se ha podido cargar el evento.</b><p class="muted">${esc(e.message)}</p><p><a href="/">Volver a la portada</a></p></div>`; return; }
+  if (!it) { app.innerHTML = '<div class="card"><b>Evento no encontrado.</b> <a href="/">Volver a la portada</a></div>'; return; }
+
+  const kind = id.split('-')[0], sport = SPORT_OF[kind] || 'Deporte';
+  const L = it.league, isMatch = it.kind === 'match', done = it.state === 'done', live = it.state === 'live';
+  const name = labelOf(it), season = seasonOf(it);
+  const pf = broadcastersFor(it).map(b => ({ ...PLATFORMS[b.p], key: b.p, note: b.note })).filter(p => p.name);
+  const when = longDate(it.start) + ' a las ' + hour(it.start);
+  const pageUrl = SITE + '/evento?id=' + encodeURIComponent(id);
+  const hasScore = isMatch && it.home.score != null && it.away.score != null;
+
+  // SEO
+  const titleTxt = done ? `Resumen ${resultTxt(it)} | ${L.name} ${season} – ConquerorTV`
+    : live ? `${name} en directo | Dónde verlo – ConquerorTV`
+    : `${name}: horario y dónde verlo | ${L.name} – ConquerorTV`;
+  document.title = titleTxt;
+  document.querySelector('meta[name="description"]').setAttribute('content', done
+    ? `Resumen en vídeo oficial y resultado de ${resultTxt(it)} (${L.name} ${season}). Dónde ver ${L.name} en España.`
+    : `${name} (${L.name}): ${when}. Dónde verlo en España y resumen oficial al terminar.`);
+  document.querySelector('link[rel="canonical"]').setAttribute('href', pageUrl);
+
+  const crest = (t, size) => t.logo ? `<img src="${esc(t.logo)}" alt="" width="${size}" height="${size}" style="width:${size}px;height:${size}px;object-fit:contain;flex:0 0 auto">` : `<span class="crest home" style="width:${size}px;height:${size}px">${esc(String(t.name || '?').slice(0, 3).toUpperCase())}</span>`;
+  const status = (it.label || (done ? 'Final' : live ? 'En directo' : 'Por jugar')).toUpperCase() + (live && it.clock ? ' · ' + esc(it.clock) : '');
+
+  const scoreboard = isMatch ? `
+    <section class="card scoreboard" aria-label="Resultado">
+      <div class="score-meta">${L.logo ? `<img src="${esc(L.logo)}" alt="" width="22" height="22" style="width:22px;height:22px;object-fit:contain">` : ''}<strong>${esc(L.name)}${it.round ? ' · ' + esc(it.round) : ''}</strong><span>·</span>
+        <time datetime="${esc(it.start)}">${esc(longDate(it.start))} · ${esc(hour(it.start))}</time>${it.venue ? `<span>·</span><span>${esc(it.venue)}</span>` : ''}
+        <span class="status-tag">${esc(status)}</span></div>
+      <div class="score-row">
+        <div class="team home"><span class="team-name">${esc(it.home.name)}</span>${crest(it.home, 64)}</div>
+        <div class="score" aria-label="${hasScore ? 'Resultado ' + it.home.score + ' a ' + it.away.score : 'Por jugar'}">${it.home.score ?? '-'} <span class="sep">–</span> ${it.away.score ?? '-'}</div>
+        <div class="team away">${crest(it.away, 64)}<span class="team-name">${esc(it.away.name)}</span></div>
+      </div>
+    </section>` : `
+    <section class="card scoreboard" aria-label="Gran Premio">
+      <div class="score-meta">${L.logo ? `<img src="${esc(L.logo)}" alt="" width="22" height="22" style="width:22px;height:22px;object-fit:contain">` : ''}<strong>${esc(L.name)}${it.gp ? ' · Ronda ' + esc(it.gp) : ''}</strong><span>·</span>
+        <time datetime="${esc(it.start)}">${esc(longDate(it.start))} · ${esc(hour(it.start))}</time><span class="status-tag">${esc(status)}</span></div>
+      <div style="display:flex;align-items:center;gap:16px;padding:8px 0 4px;flex-wrap:wrap">
+        ${it.flag ? `<img src="${esc(it.flag)}" alt="" width="56" height="38" style="width:56px;height:38px;object-fit:cover;border-radius:6px;border:1px solid var(--line)">` : ''}
+        <div><div class="team-name" style="font-size:clamp(22px,3vw,34px)">${esc(it.title)}</div>
+        <div class="muted" style="margin-top:4px">${esc(it.round)}${it.venue ? ' · ' + esc(it.venue) : ''}</div></div>
+      </div>
+    </section>`;
+
+  const tops = (it.top || []).length ? `<section class="card"><h2 class="section-title">Resultado · ${esc(it.round)}</h2>
+      <table class="table"><thead><tr><th class="pos">#</th><th>Piloto</th><th class="num">Tiempo</th></tr></thead><tbody>
+      ${it.top.map(r => `<tr><td class="pos">${esc(r.pos)}</td><td>${esc(r.name)}</td><td class="num">${esc(r.info || '')}</td></tr>`).join('')}</tbody></table></section>` : '';
+
+  const whereTitle = done ? `Dónde ver ${L.name} en directo en España` : `Dónde ver ${name} en España`;
+  const whereBlock = pf.length ? `<section class="card where" id="donde-ver" aria-labelledby="where-title">
+      <h2 class="section-title" id="where-title" style="font-size:17px">${esc(whereTitle)}</h2>
+      <ul class="where-list">${pf.map(p => `<li class="where-row">
+        <span class="platform" style="background:${p.color};color:${p.fg};height:40px;min-width:56px;justify-content:center;font-size:14px">${esc(p.short || p.name)}</span>
+        <span class="where-info"><b>${esc(p.name)}</b><span>${esc(p.note || '')}</span></span>
+        <span class="where-actions">
+          <a class="btn btn-primary" href="${esc(p.url)}" target="_blank" rel="noopener">Ver en ${esc(p.name)}</a>
+          ${p.free ? '' : `<a class="btn btn-outline" href="${esc(AFFILIATE_LINKS[p.key] || p.signup || p.url)}" target="_blank" rel="${AFFILIATE_LINKS[p.key] ? 'sponsored noopener' : 'noopener'}">Suscríbete</a>`}
+        </span></li>`).join('')}</ul>
+      <p class="faq-meta">Se abre la web o app oficial de la plataforma y entras con tu propia cuenta. La emisión de cada partido o sesión puede variar; consulta su programación.${Object.values(AFFILIATE_LINKS).some(Boolean) ? ' Algunos enlaces son de afiliado.' : ''}</p>
+    </section>` : '';
+
+  // Preguntas: solo con datos reales
+  const faq = [];
+  if (done && isMatch && hasScore) {
+    const h = it.home, a = it.away, w = h.score > a.score ? [h, a] : a.score > h.score ? [a, h] : null;
+    faq.push([`¿Cuál fue el resultado del ${name} de ${L.name} ${season}?`,
+      w ? `${w[0].name} ganó ${Math.max(h.score, a.score)}-${Math.min(h.score, a.score)} a ${w[1].name} en el partido${it.round ? ' (' + it.round.toLowerCase() + ')' : ''} de ${L.name} ${season}, disputado el ${longDate(it.start)}${it.venue ? ' en ' + it.venue : ''}.`
+        : `${h.name} y ${a.name} empataron a ${h.score} el ${longDate(it.start)}.`]);
+  }
+  if (done && !isMatch && (it.top || []).length) {
+    faq.push([`¿Quién ganó ${it.title} (${it.round})?`, `${it.top[0].name.split(' · ')[0]} fue primero${it.top[1] ? ', seguido de ' + it.top[1].name.split(' · ')[0] : ''}${it.top[2] ? ' y ' + it.top[2].name.split(' · ')[0] : ''}.`]);
+  }
+  if (done) faq.push([`¿Dónde ver el resumen de ${isMatch ? 'el ' + name : it.title + ' (' + it.round + ')'}?`, `El vídeo resumen está en esta página de ConquerorTV cuando lo publica el canal oficial de ${L.name} en YouTube. Solo mostramos vídeos de fuentes oficiales.`]);
+  faq.push([`¿Cuándo ${done ? 'se disputó' : 'se disputa'} ${isMatch ? 'el ' + name : it.title + ' (' + it.round + ')'}?`, `${done ? 'Se disputó' : 'Se disputa'} el ${when} (hora peninsular española)${it.venue ? ' en ' + it.venue : ''}.`]);
+  if (pf.length) faq.push([`¿En qué canal ${done ? 'se vio' : 'se puede ver'} ${isMatch ? 'el ' + name : it.title} en directo en España?`, `En España, ${L.name} se emite en ${pf.map(p => p.name).join(' y ')}. Necesitas tu propia suscripción.`]);
+
+  app.innerHTML = `
+  <ol class="breadcrumb" aria-label="Ruta"><li><a href="/">Inicio</a></li><li><a href="/">${esc(sport)}</a></li><li>${esc(L.name)}</li>${it.round ? `<li>${esc(it.round)}</li>` : ''}</ol>
+  ${scoreboard}
+  <div class="layout">
+   <div class="col-main">
+    <section class="video-block a-video" id="resumen" aria-label="Resumen en vídeo">
+      <h1>${done ? 'Resumen: ' + esc(isMatch ? resultTxt(it) : it.title + ' · ' + it.round) : live ? esc(name) + ' en directo' : esc(name) + ': previa y dónde verlo'}</h1>
+      <div class="player" id="player"><span class="muted" style="color:#8A94A3">Buscando el resumen oficial…</span></div>
+      <p class="faq-meta" id="videoMeta"></p>
+      ${whereBlock}
+    </section>
+    ${tops}
+   </div>
+  </div>
+  <section class="faq" id="preguntas" aria-labelledby="faq-title">
+    <h2 class="section-title" id="faq-title">Preguntas sobre ${esc(isMatch ? name : it.title + ' (' + it.round + ')')} (${esc(L.name)} ${esc(season)})</h2>
+    <dl class="key-facts" aria-label="Datos clave">
+      ${hasScore ? `<div><dt>Resultado</dt><dd>${esc(resultTxt(it))}</dd></div>` : ''}
+      <div><dt>Competición</dt><dd>${esc(L.name)} ${esc(season)}${it.round ? ' · ' + esc(it.round) : ''}</dd></div>
+      <div><dt>Fecha</dt><dd><time datetime="${esc(it.start)}">${esc(fmt(it.start, { day: '2-digit', month: '2-digit', year: 'numeric' }))} · ${esc(hour(it.start))}</time></dd></div>
+      ${it.venue ? `<div><dt>${isMatch ? 'Pabellón / estadio' : 'Circuito'}</dt><dd>${esc(it.venue)}</dd></div>` : ''}
+    </dl>
+    ${faq.map(([q, a], i) => `<div class="faq-item" id="pregunta-${i + 1}"><h3>${esc(q)}</h3><p>${esc(a)}</p></div>`).join('')}
+    <p class="faq-meta">Actualizado el <time datetime="${new Date().toISOString()}">${esc(longDate(new Date().toISOString()))} a las ${esc(hour(new Date().toISOString()))}</time> · Vídeos: canales oficiales en YouTube</p>
+  </section>`;
+  if (location.hash && document.querySelector(location.hash)) requestAnimationFrame(() => document.querySelector(location.hash).scrollIntoView());
+
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'SportsEvent', name, sport, startDate: it.start, location: it.venue ? { '@type': 'Place', name: it.venue } : undefined,
+      ...(isMatch ? { homeTeam: { '@type': 'SportsTeam', name: it.home.name }, awayTeam: { '@type': 'SportsTeam', name: it.away.name } } : {}),
+      superEvent: { '@type': 'SportsEvent', name: `${L.name} ${season}${it.round ? ' · ' + it.round : ''}` } },
+    { '@type': 'WebPage', '@id': pageUrl, name: document.title, inLanguage: 'es-ES', dateModified: new Date().toISOString() },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: sport, item: SITE + '/' }, { '@type': 'ListItem', position: 3, name: L.name, item: SITE + '/' }] },
+    { '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }
+  ] };
+  document.getElementById('ldjson').textContent = JSON.stringify(ld);
+
+  // Vídeo
+  const player = document.getElementById('player'), meta = document.getElementById('videoMeta');
+  const msg = t => `<span style="color:#8A94A3;padding:16px;text-align:center;max-width:460px">${t}</span>`;
+  if (!done) {
+    player.innerHTML = `<div style="text-align:center;padding:20px;display:flex;flex-direction:column;gap:10px;align-items:center">
+        ${live ? `<span class="live-pill"><span class="live-dot"></span>EN DIRECTO${it.clock ? ' · ' + esc(it.clock) : ''}</span>` : ''}
+        ${hasScore || (live && isMatch) ? `<span style="font-family:var(--font-display);font-weight:700;font-size:44px">${it.home.score ?? 0} – ${it.away.score ?? 0}</span>` : `<span style="font-family:var(--font-display);font-weight:700;font-size:32px">${esc(shortDate(it.start))} · ${esc(hour(it.start))}</span>`}
+        <span style="color:#C9D1DB;max-width:440px">${live ? 'Este evento no se emite en abierto aquí. ' + (pf.length ? 'Míralo con tu suscripción en las plataformas de abajo.' : '') : 'El resumen oficial estará disponible cuando termine.'}</span>
+        ${pf.length ? '<a class="btn btn-primary" href="#donde-ver">Dónde verlo</a>' : ''}</div>`;
+    if (live) setTimeout(() => renderEvent(id), 5 * 60000);
+    return;
+  }
+  const showVideo = async (force) => {
+    player.innerHTML = '<span style="color:#8A94A3">Buscando el resumen oficial…</span>';
+    try {
+      const region = await viewerCountry();
+      const v = await findOfficialHighlight(officialEventFor(it), region, { force });
+      renderDebug(v);
+      const srcName = (v.sources || []).map(x => x.label).join(' / ') || 'la competición';
+      if (v.status === 'no-source') { player.innerHTML = msg(esc(L.name) + ' no publica resúmenes oficiales gratuitos en YouTube. Solo mostramos vídeos de fuentes oficiales.'); meta.innerHTML = ''; return; }
+      if (v.status !== 'ok') { player.innerHTML = msg('El resumen oficial de ' + esc(srcName) + ' aún no se ha publicado. Suele llegar unas horas después del final y aparecerá aquí en cuanto esté.'); meta.innerHTML = ''; setTimeout(() => showVideo(false), 20 * 60000); return; }
+      const watch = 'https://www.youtube.com/watch?v=' + encodeURIComponent(v.videoId);
+      meta.innerHTML = `<b>${esc(v.channel)}</b> · ${esc(v.title)}${v.duration ? ' · ' + isoDur(v.duration) : ''} · <a href="${watch}" target="_blank" rel="noopener">Ver en YouTube</a> · <button type="button" class="link-btn" id="wrongVideo">¿No es el resumen correcto?</button>`;
+      const blocked = () => {
+        player.innerHTML = `<a href="${watch}" target="_blank" rel="noopener" aria-label="Ver el resumen en YouTube" style="position:absolute;inset:0;background:url('https://i.ytimg.com/vi/${encodeURIComponent(v.videoId)}/hqdefault.jpg') center/cover"></a><span style="position:absolute;inset:0;background:rgba(5,7,10,.55);pointer-events:none"></span><a class="btn btn-primary" style="position:relative" href="${watch}" target="_blank" rel="noopener">Ver resumen en YouTube</a>`;
+      };
+      if (!v.embeddable) blocked();
+      else {
+        player.innerHTML = '<div id="ytplayer"></div>';
+        const YT = await loadYT();
+        new YT.Player('ytplayer', { videoId: v.videoId, host: 'https://www.youtube-nocookie.com', playerVars: { rel: 0, playsinline: 1 },
+          events: { onError: e => { if ([100, 101, 150, 153].includes(e.data)) blocked(); } } });
+      }
+      document.getElementById('wrongVideo').addEventListener('click', () => { banOfficialVideo(it.id, v.videoId); showVideo(true); });
+      ld['@graph'] = ld['@graph'].filter(g => g['@type'] !== 'VideoObject');
+      ld['@graph'].push({ '@type': 'VideoObject', name: v.title, description: 'Resumen: ' + resultTxt(it), thumbnailUrl: `https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`, uploadDate: v.published, duration: v.duration, embedUrl: 'https://www.youtube-nocookie.com/embed/' + v.videoId });
+      document.getElementById('ldjson').textContent = JSON.stringify(ld);
+    } catch (e) { player.innerHTML = msg('No se ha podido buscar el resumen: ' + esc(e.message)); }
+  };
+  showVideo(false);
+}
+
+/* ---------- Tema y arranque ---------- */
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const dark = document.documentElement.getAttribute('data-theme') !== 'dark';
+  if (dark) document.documentElement.setAttribute('data-theme', 'dark'); else document.documentElement.removeAttribute('data-theme');
+  try { localStorage.setItem('ctv_theme', dark ? 'dark' : 'light'); } catch (e) {}
+});
+document.getElementById('shareBtn').addEventListener('click', async () => { try { if (navigator.share) await navigator.share({ title: document.title, url: location.href }); else await navigator.clipboard.writeText(location.href); } catch (e) {} });
+document.addEventListener('error', e => { if (e.target.tagName === 'IMG') e.target.style.visibility = 'hidden'; }, true);
+const evId = new URLSearchParams(location.search).get('id');
+if (evId) renderEvent(evId); else app.innerHTML = '<div class="card"><b>Falta el evento.</b> <a href="/">Volver a la portada</a></div>';
+
+</script>
+</body>
+</html>

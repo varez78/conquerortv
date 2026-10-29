@@ -304,7 +304,7 @@ const BROADCAST_ES = {
   135: [{ p: 'dazn', note: 'Todos los partidos' }, { p: 'movistar', note: '1 partido por jornada' }],
   78:  [{ p: 'dazn', note: 'Todos los partidos' }],
   61:  [{ p: 'dazn', note: 'Todos los partidos' }],
-  acb: [{ p: 'dazn', note: 'Todos los partidos · 1 por jornada gratis' }],
+  acb: [{ p: 'movistar', note: 'Liga Endesa (paquete Baloncesto)' }, { p: 'dazn', note: 'Plan Baloncesto de DAZN' }],
   euroleague: [{ p: 'movistar', note: 'Los mejores partidos de cada jornada' }],
   nba: [{ p: 'prime', note: 'Partidos seleccionados' }, { p: 'dazn', note: 'Unos 180 partidos de temporada regular' }, { p: 'leaguepass', note: 'Todos los partidos' }],
   f1:  [{ p: 'dazn', note: 'Todas las sesiones (DAZN F1)' }],
@@ -1021,7 +1021,22 @@ function body(it, showScore){
 }
 // Página de detalle: de momento solo para partidos de API-Football (ids "fb-")
 const DETAIL_PAGE = '/partido';
-function detailUrl(it, hash){ return it.id.startsWith('fb-') ? DETAIL_PAGE + '?id=' + encodeURIComponent(it.id.slice(3)) + (hash || '') : null; }
+function detailUrl(it, hash){
+  if (it.id.startsWith('fb-')) return DETAIL_PAGE + '?id=' + encodeURIComponent(it.id.slice(3)) + (hash || '');
+  // Baloncesto, ACB, MotoGP, fútbol de football-data y sesiones de F1 (f1-<año>-<ronda>-<sesión>): página de evento
+  if (/^(bk|nba|acb|mgp|fd)-\d+$/.test(it.id) || /^f1-\d{4}-\d+-\w+$/.test(it.id)) return '/evento?id=' + encodeURIComponent(it.id) + (hash || '');
+  return null;
+}
+// La portada guarda cada evento para que su página de detalle se abra al instante sin gastar peticiones
+function rememberItems(items){
+  try {
+    const m = JSON.parse(localStorage.getItem('ctv_items') || '{}'), now = Date.now();
+    items.forEach(it => { if (it && it.id && !it.id.startsWith('fb-')) m[it.id] = { ts: now, item: it }; });
+    const keys = Object.keys(m);
+    if (keys.length > 150) keys.sort((a, b) => m[a].ts - m[b].ts).slice(0, keys.length - 150).forEach(k => delete m[k]);
+    localStorage.setItem('ctv_items', JSON.stringify(m));
+  } catch (e) {}
+}
 function detailCover(it){
   const u = detailUrl(it);
   if (!u) return '';
@@ -1069,6 +1084,7 @@ function doneCard(it){
 function list(el, items, cardFn, emptyText, loading){
   const box = document.getElementById(el);
   if (loading && !items.length) { box.innerHTML = '<div class="grid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>'; return; }
+  rememberItems(items);
   box.innerHTML = items.length ? '<div class="grid">' + items.map(cardFn).join('') + '</div>' : `<div class="empty">${emptyText}</div>`;
 }
 
