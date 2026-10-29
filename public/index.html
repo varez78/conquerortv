@@ -35,7 +35,7 @@ button{font-family:inherit;cursor:pointer;color:inherit}
 button:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 img{display:block}
 img.broken{visibility:hidden}
-.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+.wrap{max-width:1280px;margin:24px auto 0;padding:0 clamp(16px,3vw,32px)}
 .display{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--red-soft);display:inline-block;flex:0 0 auto;animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
@@ -438,6 +438,7 @@ const SPORTS = [
   { id: 'futbol', label: 'Fútbol', on: true, icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.8 2.8-1.4 4.4H9.6l-1.4-4.4z"/><path d="M12 3v4.5M15.8 10.3l4.4-1.5M14.4 14.7l2.6 3.9M9.6 14.7L7 18.6M8.2 10.3L3.8 8.8"/>' },
   { id: 'baloncesto', label: 'Baloncesto', on: true, icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3.4 3.5 3.4 9.3 0 12.8M18.4 5.6c-3.4 3.5-3.4 9.3 0 12.8"/>' },
   { id: 'motor', label: 'Motor', on: true, icon: '<path d="M5 21V3.5"/><path d="M5 4h14v9H5"/><path d="M9.7 4v9M14.3 4v9M5 8.5h14"/>' },
+  { id: 'tenis', label: 'Tenis', icon: '<circle cx="12" cy="12" r="9"/><path d="M5.6 5.8c3.3 3.3 3.3 9.1 0 12.4M18.4 5.8c-3.3 3.3-3.3 9.1 0 12.4"/>' }
 ];
 const state = {
   sport: 'futbol',
@@ -1090,7 +1091,7 @@ function renderSports(){
     const d = state.data[s.id];
     const live = d ? d.items.filter(i => i.state === 'live').length : 0;
     return `<button class="sport" type="button" data-sport="${s.id}" aria-pressed="${state.sport === s.id}" ${s.on ? '' : 'disabled title="Requiere su propia API"'}>
-      ${s.on ? (live ? `<span class="sport-live">${live} live</span>` : '') : '<span class="soon">Pronto</span>'}
+      ${s.on ? (live ? `<span class="sport-live">${live} live</span>` : '') : '<span class="soon">Próximamente</span>'}
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${s.icon}</svg>
       <span>${s.label}</span></button>`;
   }).join('');
