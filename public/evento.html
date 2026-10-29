@@ -622,6 +622,7 @@ function renderDebug(v){
   box.innerHTML = '<h2 class="section-title" style="font-size:16px">Revisión del resumen</h2>' +
     '<p class="muted" style="font-size:13px">Fuentes: ' + esc((v.sources || []).map(s => s.handle + ' → ' + (s.channelTitle || s.error || '?')).join(' · ') || 'ninguna') + ' · estado: <b>' + esc(v.status) + '</b></p>' +
     '<ul style="font-size:13px;padding-left:18px">' + (v.candidates || []).map(c => '<li><a href="https://www.youtube.com/watch?v=' + encodeURIComponent(c.videoId) + '" target="_blank" rel="noopener">' + esc(c.title) + '</a> — ' + esc((c.why || []).join(' · ') || (c.chosen ? 'elegido' : 'válido')) + '</li>').join('') + '</ul>';
+  if ((v.skipped || []).length) box.innerHTML += '<p class="muted" style="font-size:13px">Otras subidas recientes del canal (no mencionan el evento):</p><ul style="font-size:13px;padding-left:18px">' + v.skipped.map(c => '<li><a href="https://www.youtube.com/watch?v=' + encodeURIComponent(c.videoId) + '" target="_blank" rel="noopener">' + esc(c.title) + '</a></li>').join('') + '</ul>';
 }
 
 /* ---------- Textos ---------- */

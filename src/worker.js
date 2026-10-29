@@ -198,7 +198,7 @@ const OFFICIAL_SOURCES = {
   78:  [{ handle: '@bundesliga', label: 'Bundesliga', verified: true }],
   61:  [{ handle: '@Ligue1', label: 'Ligue 1', verified: false }],
   nba: [{ handle: '@NBA', label: 'NBA', verified: true }],
-  euroleague: [{ handle: '@EuroLeague', label: 'EuroLeague', verified: false }],
+  euroleague: [{ handle: '@EuroLeague', label: 'EuroLeague', verified: true }],
   acb: [{ handle: '@ACBvideo', label: 'Liga Endesa (ACB)', verified: false }],
   f1:  [{ handle: '@Formula1', label: 'Formula 1', verified: true }],
   motogp: [{ handle: '@MotoGP', label: 'MotoGP', verified: true }]
@@ -268,7 +268,7 @@ async function findOfficialHighlight(env, ctx, ev, region) {
     if (saved && !banned.includes(saved.videoId)) return saved;
   }
   const t0 = new Date(ev.start).getTime(), until = t0 + 5 * 86400000;
-  const srcInfo = [], found = [];
+  const srcInfo = [], found = [], skipped = [];
   for (const s of sources) {
     let ch = null;
     try { ch = await resolveHandle(env, ctx, s.handle); } catch (e) { srcInfo.push({ ...s, error: e.message }); continue; }
@@ -285,13 +285,13 @@ async function findOfficialHighlight(env, ctx, ev, region) {
       if (!ev.women && WOMEN.test(u.title)) why.push('femenino');
       if (!ev.youth && YOUTH.test(u.title)) why.push('cantera/filial');
       if (ev.kind === 'match') {
-        if (!teamIn(ev.home, u.title) || !teamIn(ev.away, u.title)) continue;
+        if (!teamIn(ev.home, u.title) || !teamIn(ev.away, u.title)) { skipped.push({ videoId: u.videoId, title: u.title, channel: ch.title }); continue; }
         if (ev.hg != null && ev.ag != null && /\b\d{1,3}\s*[-–:]\s*\d{1,3}\b/.test(u.title)) {
           const ok = new RegExp('\\b' + ev.hg + '\\s*[-–:]\\s*' + ev.ag + '\\b').test(u.title) || new RegExp('\\b' + ev.ag + '\\s*[-–:]\\s*' + ev.hg + '\\b').test(u.title);
           if (!ok) why.push('el título trae otro resultado');
         }
       } else {
-        if (!(ev.eventWords || []).some(w => norm(u.title).includes(w))) continue;
+        if (!(ev.eventWords || []).some(w => norm(u.title).includes(w))) { skipped.push({ videoId: u.videoId, title: u.title, channel: ch.title }); continue; }
         const sessionRe = {
           race: /^(?!.*sprint).*\brace\b/i, sprint: /\bsprint\b(?!.*(qualifying|shootout))/i, sprintq: /sprint (qualifying|shootout)/i,
           qualifying: /^(?!.*sprint).*qualifying/i, fp1: /\bfp1\b/i, fp2: /\bfp2\b/i, fp3: /\bfp3\b/i
@@ -322,6 +322,7 @@ async function findOfficialHighlight(env, ctx, ev, region) {
     ? { status: 'ok', videoId: best.videoId, title: best.title, channel: best.channel, embeddable: best.embeddable, duration: best.duration, published: best.published }
     : { status: 'pending' };
   out.sources = srcInfo;
+  out.skipped = skipped.slice(0, 15);
   out.candidates = found.map(({ videoId, title, channel, why, sec }) => ({ videoId, title, channel, why, sec, chosen: !!best && best.videoId === videoId }));
   // Solo se guarda (en KV, compartido) cuando se encuentra: así se escriben pocas veces
   if (best && env.CACHE) ctx.waitUntil(env.CACHE.put(kvKey, JSON.stringify(out), { expirationTtl: 30 * 86400 }));

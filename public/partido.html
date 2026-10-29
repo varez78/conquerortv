@@ -689,6 +689,7 @@ function renderDebug(v){
       <td><a href="https://www.youtube.com/watch?v=${encodeURIComponent(c.videoId)}" target="_blank" rel="noopener">${esc(c.title)}</a><br><span class="muted">${esc(c.channel)}${c.sec ? ' · ' + Math.round(c.sec / 60) + ' min' : ''}</span></td>
       <td class="muted" style="font-size:12px">${esc((c.why || []).join(' · ') || (c.chosen ? 'elegido' : 'válido'))}</td></tr>`).join('') || '<tr><td colspan="3" class="muted">Ningún vídeo de estos canales menciona a los dos equipos desde el inicio del partido.</td></tr>'}
     </tbody></table>`;
+  if ((v.skipped || []).length) box.innerHTML += '<p class="muted" style="font-size:13px">Otras subidas recientes del canal (no mencionan el evento):</p><ul style="font-size:13px;padding-left:18px">' + v.skipped.map(c => '<li><a href="https://www.youtube.com/watch?v=' + encodeURIComponent(c.videoId) + '" target="_blank" rel="noopener">' + esc(c.title) + '</a></li>').join('') + '</ul>';
 }
 
 let ytApi = null;
