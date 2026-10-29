@@ -130,10 +130,14 @@ async function cachedUpstream(env, ctx, host, path, ttl) {
   if (fresh) return jsonText(saved.body, ttl);
 
   // Caducado o inexistente: ¿queda presupuesto hoy y no hay bloqueo por cupo?
-  const blocked = await env.CACHE.get('limit:' + host);
-  if (blocked || (await budgetLeft(env, host)) <= 0) {
+  // El bloqueo guarda la hora (ms) hasta la que vale; los valores antiguos ('1') se ignoran
+  const until = parseInt(await env.CACHE.get('limit:' + host) || '0', 10);
+  const blocked = until > Date.now() ? until : 0;
+  const dayOut = (await budgetLeft(env, host)) <= 0;
+  if (blocked || dayOut) {
     if (saved) return jsonText(saved.body, 60);                // copia antigua mejor que nada
-    return json({ errors: { requests: 'LIMIT_REACHED' }, response: [] });
+    const rate = blocked && !dayOut && blocked - Date.now() < 3600e3;
+    return json({ errors: { requests: rate ? 'RATE_LIMITED' : 'LIMIT_REACHED' }, response: [] });
   }
 
   await spendBudget(env, ctx, host);
@@ -150,10 +154,13 @@ async function cachedUpstream(env, ctx, host, path, ttl) {
   const errs = data && data.errors && (Array.isArray(data.errors) ? data.errors : Object.values(data.errors));
   if (!data || (errs && errs.length)) {
     const msg = errs ? errs.join(' · ') : 'Respuesta no válida';
-    if (/request limit|too many requests/i.test(msg)) {
+    if (/request limit|too many requests|rate limit/i.test(msg)) {
       const now = new Date();
-      const secs = Math.max(60, Math.floor((Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1) - now) / 1000));
-      ctx.waitUntil(env.CACHE.put('limit:' + host, '1', { expirationTtl: secs }));
+      // "por minuto" → pausa de 65 s; "por día" → hasta las 00:00 UTC
+      const perMinute = /too many requests|rate limit|per minute/i.test(msg) && !/for the day/i.test(msg);
+      const secs = perMinute ? 65 : Math.max(60, Math.floor((Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1) - now) / 1000));
+      ctx.waitUntil(env.CACHE.put('limit:' + host, String(Date.now() + secs * 1000), { expirationTtl: secs }));
+      if (!saved) return json({ errors: { requests: perMinute ? 'RATE_LIMITED' : 'LIMIT_REACHED' }, response: [] });
     }
     if (saved) return jsonText(saved.body, 60);               // con error, se sirve la última copia buena
     return json(data || { errors: [msg], response: [] });

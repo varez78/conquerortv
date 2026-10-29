@@ -475,12 +475,19 @@ const nextUtcMidnight = () => { const d = new Date(); return Date.UTC(d.getUTCFu
 function limitReached(host){ const t = loadJSON('ctv_limit_' + host); return t && Date.now() < t; }
 async function api(host, path){
   if (limitReached(host)) throw new Error('LIMIT_REACHED');
-  const res = await fetch(HOSTS[host] + path);
-  const json = await res.json();
+  let json;
+  for (let i = 0; i < 4; i++) {            // límite por minuto: esperar y reintentar
+    const res = await fetch(HOSTS[host] + path);
+    json = await res.json();
+    const e = json.errors && (Array.isArray(json.errors) ? json.errors : Object.values(json.errors)).join(' ');
+    if (!/RATE_LIMITED/.test(e || '')) break;
+    await new Promise(r => setTimeout(r, 20000));
+  }
   const errs = json.errors && (Array.isArray(json.errors) ? json.errors : Object.values(json.errors));
   if (errs && errs.length) {
     const msg = errs.join(' · ');
-    if (/LIMIT_REACHED|request limit|too many requests/i.test(msg)) { saveJSON('ctv_limit_' + host, nextUtcMidnight()); throw new Error('LIMIT_REACHED'); }
+    if (/RATE_LIMITED/.test(msg)) throw new Error('Demasiadas consultas seguidas; se reintentará en el siguiente refresco.');
+    if (/LIMIT_REACHED|request limit/i.test(msg)) { saveJSON('ctv_limit_' + host, nextUtcMidnight()); throw new Error('LIMIT_REACHED'); }
     throw new Error(msg);
   }
   return json.response || [];
