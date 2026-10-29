@@ -472,7 +472,7 @@ function friendlyError(msg){
 
 // Cupo diario de API-Sports: al agotarse, no se hacen más peticiones hasta que se renueve (00:00 UTC)
 const nextUtcMidnight = () => { const d = new Date(); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1); };
-function limitReached(host){ const t = loadJSON('ctv_limit_' + host); return t && Date.now() < t; }
+function limitReached(host){ const t = loadJSON('ctv_limit2_' + host); return t && Date.now() < t; }
 async function api(host, path){
   if (limitReached(host)) throw new Error('LIMIT_REACHED');
   let json;
@@ -487,7 +487,7 @@ async function api(host, path){
   if (errs && errs.length) {
     const msg = errs.join(' · ');
     if (/RATE_LIMITED/.test(msg)) throw new Error('Demasiadas consultas seguidas; se reintentará en el siguiente refresco.');
-    if (/LIMIT_REACHED|request limit/i.test(msg)) { saveJSON('ctv_limit_' + host, nextUtcMidnight()); throw new Error('LIMIT_REACHED'); }
+    if (/LIMIT_REACHED|request limit/i.test(msg)) { saveJSON('ctv_limit2_' + host, nextUtcMidnight()); throw new Error('LIMIT_REACHED'); }
     throw new Error(msg);
   }
   return json.response || [];
