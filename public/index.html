@@ -61,8 +61,8 @@ header{border-bottom:1px solid var(--line-soft);background:var(--surface)}
 .soon{position:absolute;top:-7px;right:6px;font-size:10px;font-weight:700;background:var(--surface2);border:1px solid var(--line);color:var(--muted);padding:1px 6px;border-radius:999px}
 .sport-live{position:absolute;top:-7px;right:6px;font-size:10px;font-weight:700;background:var(--red);color:#fff;padding:1px 6px;border-radius:999px}
 
-main{padding-top:24px;padding-bottom:64px;display:flex;flex-direction:column;gap:28px}
-.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2)}
+main{padding-top:40px;padding-bottom:64px;display:flex;flex-direction:column;gap:28px}
+.eyebrow{display:block;margin-bottom:14px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2)}
 .leagues{gap:10px;margin-top:12px;padding-bottom:4px}
 .league{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;min-height:56px;border-radius:14px;border:1px solid var(--line);background:var(--surface-up);text-align:left}
 .league[aria-pressed="true"]{border-color:var(--text);background:var(--surface2)}
@@ -226,7 +226,7 @@ body.modal-open{overflow:hidden}
   <div id="banner"></div>
   <div id="player"></div>
   <div class="league-head" id="leagueHead"></div>
-  <section aria-label="En directo">
+  <section aria-label="En directo" id="liveSection">
     <div class="sec-head"><span class="live-dot"></span><h2>En directo</h2><span class="count" id="liveCount"></span></div>
     <div id="liveList"></div>
   </section>
@@ -1255,6 +1255,7 @@ function render(){
   document.getElementById('doneCount').textContent = cnt(done.length);
   const nextOne = up[0];
   const liveEmpty = 'No hay nada en directo aquí ahora mismo.' + (nextOne ? ' Próximo: <b style="color:var(--text)">' + esc(nextOne.kind === 'event' ? nextOne.round : nextOne.home.name + ' – ' + nextOne.away.name) + '</b>, ' + esc(fmtDay(nextOne.start)) + ' a las ' + fmtTime(nextOne.start) + '.' : '');
+  document.getElementById('liveSection').hidden = !d.loading && live.length === 0;   // sin directos, no se muestra el bloque
   list('liveList', live, liveCard, liveEmpty, d.loading);
   list('upList', up, upCard, sport === 'motor' ? 'No hay próximas sesiones programadas.' : 'No quedan más partidos por jugarse hoy aquí.', d.loading);
   list('doneList', done, doneCard, 'Todavía no ha terminado nada hoy.', d.loading);
